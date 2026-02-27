@@ -95,7 +95,7 @@ public class Userdashboard extends javax.swing.JFrame {
         jLabel8.setText("PAYMENTS");
         payments.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 80, 20));
 
-        navbar.add(payments, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 160, 40));
+        navbar.add(payments, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 160, 40));
 
         userpane.setBackground(new java.awt.Color(102, 102, 102));
         userpane.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -113,8 +113,8 @@ public class Userdashboard extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("USER");
-        userpane.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 60, -1));
+        jLabel6.setText("MEMBERSHIP");
+        userpane.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 90, -1));
 
         navbar.add(userpane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 160, 40));
 
@@ -193,8 +193,8 @@ public class Userdashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_paymentsMouseExited
 
     private void userpaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpaneMouseClicked
-        manageUser ur = new manageUser();
-        maindesktop.add(ur).setVisible(true);
+        membersForm mm = new membersForm();
+        maindesktop.add(mm).setVisible(true);
     }//GEN-LAST:event_userpaneMouseClicked
 
     private void userpaneMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpaneMouseEntered
