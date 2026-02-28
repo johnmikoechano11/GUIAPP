@@ -7,6 +7,7 @@ package internalPages;
 
 import config.Session;
 import java.awt.Color;
+import main_app.Profileform;
 
 /**
  *
@@ -19,6 +20,7 @@ public class userprofile extends javax.swing.JInternalFrame {
      */
     public userprofile() {
         initComponents();
+        profile();
     }
     Color navcolor = new Color (102,102,102);
      Color headcolor = new Color (51,51,51);
@@ -133,6 +135,9 @@ cont.setText(session.getPhone());
 
         manageUser.setBackground(new java.awt.Color(204, 204, 204));
         manageUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                manageUserMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 manageUserMouseEntered(evt);
             }
@@ -258,6 +263,12 @@ cont.setText(session.getPhone());
     private void membersMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_membersMouseExited
         members.setBackground(headcolor);
     }//GEN-LAST:event_membersMouseExited
+
+    private void manageUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageUserMouseClicked
+      Profileform p = new Profileform();
+      p.setVisible(true);
+      this.dispose();
+    }//GEN-LAST:event_manageUserMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

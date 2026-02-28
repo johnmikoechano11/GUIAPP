@@ -5,6 +5,7 @@
  */
 package internalPages;
 
+import main_app.membersForm;
 import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
