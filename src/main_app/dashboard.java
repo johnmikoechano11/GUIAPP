@@ -87,6 +87,9 @@ public class dashboard extends javax.swing.JFrame {
 
         payments.setBackground(new java.awt.Color(102, 102, 102));
         payments.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                paymentsMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 paymentsMouseEntered(evt);
             }
@@ -260,6 +263,11 @@ public class dashboard extends javax.swing.JFrame {
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void paymentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paymentsMouseClicked
+       Payments_page pm = new Payments_page();
+       maindesktop.add(pm).setVisible(true);
+    }//GEN-LAST:event_paymentsMouseClicked
 
     /**
      * @param args the command line arguments

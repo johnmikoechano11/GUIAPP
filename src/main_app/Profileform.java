@@ -5,6 +5,7 @@
  */
 package main_app;
 
+import config.Singleton;
 import config.configclass;
 import internalPages.userprofile;
 import java.awt.Image;
@@ -32,6 +33,15 @@ public class Profileform extends javax.swing.JFrame {
      */
     public Profileform() {
         initComponents();
+        profile();
+    }
+    
+      void profile() {
+        Singleton singleton = Singleton.getInstance();
+        p_name.setText(singleton.getFname());
+        p_id.setText(String.valueOf(singleton.getId()));
+        p_email.setText(singleton.getEmail());
+        cont.setText(singleton.getPhone());
     }
         public String destination = "";
     File selectedFile;

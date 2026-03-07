@@ -5,9 +5,17 @@
  */
 package internalPages;
 
+import config.configclass;
 import main_app.membersForm;
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.TableModel;
+import main_app.paymentsform;
 
 /**import internalPages.membersForm;
  *
@@ -27,12 +35,18 @@ public class member extends javax.swing.JInternalFrame {
         bi.setNorthPane(null);
     }
 
-        public void displayData() {
-        config.configclass conf = new config.configclass();
-        // This query fetches the auto-generated ID as the first column
-        String query = "SELECT m_id AS 'ID', m_fname AS 'First Name', m_lname AS 'Last Name', "
-                     + "m_gender AS 'Gender', m_status AS 'Status' FROM members";
-        conf.displayData(query, membersTable);
+   public void displayData() {
+    config.configclass conf = new config.configclass();
+
+    String query = "SELECT m_id AS 'ID', "
+                 + "m_fname AS 'Name', "
+                 + "m_type AS 'Membership Type', "
+                 + "m_amount AS 'Amount', "
+                 + "m_duration AS 'Duration', "
+                 + "contact AS 'Contact' "
+                 + "FROM members";
+
+    conf.displayData(query, membersTable);
 }
    
     
@@ -148,6 +162,9 @@ public class member extends javax.swing.JInternalFrame {
 
         delete.setBackground(new java.awt.Color(102, 102, 102));
         delete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 deleteMouseEntered(evt);
             }
@@ -191,6 +208,9 @@ public class member extends javax.swing.JInternalFrame {
 
         update.setBackground(new java.awt.Color(102, 102, 102));
         update.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                updateMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 updateMouseEntered(evt);
             }
@@ -282,7 +302,7 @@ public class member extends javax.swing.JInternalFrame {
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 750, 380));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -345,10 +365,12 @@ public class member extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_addMouseEntered
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
-        membersForm mf = new membersForm();
-        mf.setVisible(true);
-        mf.pack();
-        mf.setLocationRelativeTo(null); // Centers the form on screen
+       JFrame mainFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+       mainFrame.dispose();
+       membersForm stf = new membersForm();
+       stf.setVisible(true);
+       stf.action = "Add";
+       stf.st_label.setText("SAVE");
     }//GEN-LAST:event_addMouseClicked
 
     private void deleteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseExited
@@ -358,6 +380,78 @@ public class member extends javax.swing.JInternalFrame {
     private void deleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseEntered
         delete.setBackground(bodycolor);
     }//GEN-LAST:event_deleteMouseEntered
+
+    private void updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseClicked
+     int rowIndex = membersTable.getSelectedRow();
+
+if(rowIndex < 0){
+    JOptionPane.showMessageDialog(null, "Please Select an Item!");
+}else{
+
+    TableModel model = membersTable.getModel();
+    String id = model.getValueAt(rowIndex, 0).toString();
+
+    try{
+        configclass dbc = new configclass();
+        ResultSet rs = dbc.getData("SELECT * FROM members WHERE m_id = " + id);
+
+        if(rs.next()){
+
+            membersForm stf = new membersForm();
+
+            // existing fields
+            stf.m_id.setText(rs.getString("m_id"));
+             stf.m_name.setText(rs.getString("m_fname"));
+              stf.m_type.setSelectedItem(rs.getString("m_type"));
+            stf.m_amount.setText(rs.getString("m_amount"));
+           
+
+         stf.m_dura.setValue(Integer.parseInt(rs.getString("m_duration")));
+            stf.m_cont.setText(rs.getString("contact"));
+
+            stf.action = "Update";
+            stf.st_label.setText("UPDATE");
+
+            stf.setVisible(true);
+
+            JFrame mainFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            mainFrame.dispose();
+        }
+
+    }catch(SQLException e){
+        System.out.println("Database Error Connection!");
+    }
+}
+         
+    }//GEN-LAST:event_updateMouseClicked
+
+    private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
+         int rowIndex = membersTable.getSelectedRow();
+
+if(rowIndex < 0){
+    JOptionPane.showMessageDialog(null, "Please select data first from the table!");
+}else{
+
+    TableModel model = membersTable.getModel();
+    Object value = model.getValueAt(rowIndex, 0);
+    String id = value.toString();
+
+    int confirm = JOptionPane.showConfirmDialog(null, 
+            "Are you sure you want to delete Payment ID: " + id + "?");
+
+    if(confirm == JOptionPane.YES_OPTION){
+
+        configclass dbc = new configclass();
+        int r_id = Integer.parseInt(id);
+
+        dbc.deleteData(r_id, "members", "m_id");
+
+        JOptionPane.showMessageDialog(null, "Payment deleted successfully!");
+
+        displayData();
+    }
+}
+    }//GEN-LAST:event_deleteMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -375,7 +469,7 @@ public class member extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable membersTable;
+    public javax.swing.JTable membersTable;
     private javax.swing.JPanel refresh;
     private javax.swing.JTextField search;
     private javax.swing.JPanel search_button;

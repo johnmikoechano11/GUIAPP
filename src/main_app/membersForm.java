@@ -28,6 +28,9 @@ public class membersForm extends javax.swing.JFrame {
      */
     public membersForm() {
         initComponents();
+            m_dura.setModel(new javax.swing.SpinnerNumberModel(1, 1, 36, 1));
+            m_type.addActionListener(e -> setAutomaticPrice());
+m_dura.addChangeListener(e -> setAutomaticPrice());
         setAutomaticPrice();
     }
     
@@ -35,7 +38,7 @@ public class membersForm extends javax.swing.JFrame {
         this.dispose();
         dashboard dash = new dashboard();
         dash.setVisible(true);
-        manageUser up = new manageUser();
+        member up = new member();
         dash.maindesktop.add(up).setVisible(true);
     }
 int validateRegister() {
@@ -63,24 +66,19 @@ int validateRegister() {
 
 public void setAutomaticPrice() {
     try {
-
         String type = m_type.getSelectedItem().toString();
-        int months = Integer.parseInt(m_dura.getValue().toString());
+        int months = (Integer) m_dura.getValue();
         double price = 0;
 
-
-        if (type.equals("Monthly")) {
-            price = 500.00;
-        } else if (type.equals("Vip")) {
-            price = 1500.00;
-        } else if (type.equals("Student")) {
-            price = 350.00;
+        switch(type) {
+            case "Monthly": price = 500; break;
+            case "Vip": price = 1500; break;
+            case "Student": price = 350; break;
         }
 
-      
         double total = price * months;
         m_amount.setText(String.format("%.2f", total));
-        
+
     } catch (Exception e) {
         m_amount.setText("0.00");
     }
@@ -119,7 +117,7 @@ public void setAutomaticPrice() {
         firstname4 = new javax.swing.JLabel();
         m_id = new javax.swing.JLabel();
         add1 = new javax.swing.JPanel();
-        st_label1 = new javax.swing.JLabel();
+        st_label = new javax.swing.JLabel();
         firstname5 = new javax.swing.JLabel();
         m_name = new javax.swing.JTextField();
 
@@ -266,11 +264,11 @@ public void setAutomaticPrice() {
         });
         add1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        st_label1.setBackground(new java.awt.Color(255, 255, 255));
-        st_label1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        st_label1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        st_label1.setText("Label");
-        add1.add(st_label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 60, -1));
+        st_label.setBackground(new java.awt.Color(255, 255, 255));
+        st_label.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        st_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        st_label.setText("Label");
+        add1.add(st_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 60, -1));
 
         jPanel3.add(add1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 140, 40));
 
@@ -360,74 +358,65 @@ public void setAutomaticPrice() {
     }//GEN-LAST:event_m_amountActionPerformed
 
     private void add1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add1MouseClicked
-   if(action.equals("Add")){
-        int check = validateRegister();
-        if(check == 1){
-            Calendar cal = Calendar.getInstance();
-            java.util.Date start = cal.getTime();
-            
-        
-            int monthsToAdd = (Integer) m_dura.getValue();
-            cal.add(Calendar.MONTH, monthsToAdd);
-            java.util.Date expiry = cal.getTime();
-            
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String startStr = sdf.format(start);
-            String expiryStr = sdf.format(expiry);
+    int check = validateRegister();
+    if(check != 1){
+        JOptionPane.showMessageDialog(null, "All fields are required!");
+        return;
+    }
 
-            configclass dbc = new configclass();
-            
+    // Get common values
+    String name = m_name.getText().trim();
+    String type = m_type.getSelectedItem().toString();
+    int months = (Integer) m_dura.getValue();
+    double amount = Double.parseDouble(m_amount.getText());
     
-            String sql = "INSERT INTO members (m_fname, m_contact, m_type, m_duration, m_amount, m_start_date, m_expiry, m_status) "
-                       + "VALUES ('" + m_name.getText() + "', "
-                       + "'" + m_cont.getText() + "', "
-                       + "'" + m_type.getSelectedItem().toString() + "', " 
-                       + "'" + monthsToAdd + "', "
-                       + "'" + m_amount.getText() + "', " 
-                       + "'" + startStr + "', "
-                       + "'" + expiryStr + "', "
-                       + "'Active')";
+    // Calculate start and expiry dates
+    Calendar cal = Calendar.getInstance();
+    java.util.Date startDate = cal.getTime();
+    cal.add(Calendar.MONTH, months);
+    java.util.Date expiryDate = cal.getTime();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    String startStr = sdf.format(startDate);
+    String expiryStr = sdf.format(expiryDate);
 
-            int result = dbc.insertData(sql);
-            
-            if(result == 1){
-                JOptionPane.showMessageDialog(null, "Member Successfully Registered!\nTotal: " + m_amount.getText());
-                close();
-                }else{
-                    System.out.println("Saving Data Failed!");
-                }
-            }else{
-                JOptionPane.showMessageDialog(null, "All fields are required!");
-            }
+    configclass dbc = new configclass();
 
-} else if(action.equals("Update")) {
-    int check = validateRegister(); 
-    if(check == 1) {
-        Calendar cal = Calendar.getInstance();
-        int months = (Integer) m_dura.getValue();
-        cal.add(Calendar.MONTH, months);
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String expiryStr = sdf.format(cal.getTime());
+    if(action.equals("Add")) {
+        String sql = "INSERT INTO members ("
+                   + "m_fname, m_type, m_amount, m_duration, contact, start_date, expiry_date"
+                   + ") VALUES ("
+                   + "'" + name + "', "
+                   + "'" + type + "', "
+                   + "'" + amount + "', "
+                   + "'" + months + "', "
+                   + "'" + m_cont.getText().trim() + "', "
+                   + "'" + startStr + "', "
+                   + "'" + expiryStr + "'"
+                   + ")";
+        int result = dbc.insertData(sql);
+        if(result == 1){
+            JOptionPane.showMessageDialog(null, "Member Successfully Registered!\nTotal: " + amount);
+            close();
+        } else {
+            System.out.println("Saving Data Failed!");
+        }
 
-        configclass dbc = new configclass();
-
-  
+    } else if(action.equals("Update")) {
         String sql = "UPDATE members SET "
-                   + "m_fname = '" + m_name.getText() + "', " 
-                   + "m_contact = '" + m_cont.getText() + "', "
-                   + "m_type = '" + m_type.getSelectedItem().toString() + "', "
+                   + "m_fname = '" + name + "', "
+                   + "m_type = '" + type + "', "
+                   + "m_amount = '" + amount + "', "
                    + "m_duration = '" + months + "', "
-                   + "m_amount = '" + m_amount.getText() + "', " 
-                   + "m_expiry = '" + expiryStr + "' " 
+                   + "m_contact = '" + m_cont.getText().trim() + "', "
+                   + "start_date = '" + startStr + "', "
+                   + "expiry_date = '" + expiryStr + "' "
                    + "WHERE m_id = '" + m_id.getText() + "'";
-
         dbc.updateData(sql);
         JOptionPane.showMessageDialog(null, "Member Updated Successfully!");
         close();
-        }
-    }//GEN-LAST:event_add1MouseClicked
     }
+    }//GEN-LAST:event_add1MouseClicked
+    
     private void add1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add1MouseEntered
 
     }//GEN-LAST:event_add1MouseEntered
@@ -499,14 +488,14 @@ public void setAutomaticPrice() {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JTextField m_amount;
-    private javax.swing.JTextField m_cont;
-    private javax.swing.JSpinner m_dura;
-    private javax.swing.JLabel m_id;
-    private javax.swing.JTextField m_name;
-    private javax.swing.JComboBox<String> m_type;
+    public javax.swing.JTextField m_amount;
+    public javax.swing.JTextField m_cont;
+    public javax.swing.JSpinner m_dura;
+    public javax.swing.JLabel m_id;
+    public javax.swing.JTextField m_name;
+    public javax.swing.JComboBox<String> m_type;
     private javax.swing.JPanel memberform;
-    public javax.swing.JLabel st_label1;
+    public javax.swing.JLabel st_label;
     private javax.swing.JPanel update;
     private javax.swing.JPanel wrong;
     // End of variables declaration//GEN-END:variables

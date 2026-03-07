@@ -6,6 +6,7 @@
 package internalPages;
 
 import config.Session;
+import config.Singleton;
 import java.awt.Color;
 import main_app.Profileform;
 
@@ -26,13 +27,14 @@ public class userprofile extends javax.swing.JInternalFrame {
      Color headcolor = new Color (51,51,51);
      Color bodycolor = new Color (153,153,153);
    
-     void profile() {
-      Session session = Session.getInstance(); // get the singleton instance
-p_name.setText(session.getFname());
-p_id.setText(String.valueOf(session.getId())); // id is int, convert to String
-p_email.setText(session.getEmail());
-cont.setText(session.getPhone());
-     }
+  void profile() {
+        Singleton singleton = Singleton.getInstance();
+        p_name.setText(singleton.getFname());
+        p_id.setText(String.valueOf(singleton.getId()));
+        p_email.setText(singleton.getEmail());
+        cont.setText(singleton.getPhone());
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -43,7 +45,7 @@ cont.setText(session.getPhone());
         email = new javax.swing.JLabel();
         ID = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        image = new javax.swing.JLabel();
         cont = new javax.swing.JLabel();
         p_name = new javax.swing.JLabel();
         p_id = new javax.swing.JLabel();
@@ -91,9 +93,9 @@ cont.setText(session.getPhone());
         jPanel4.setBackground(new java.awt.Color(153, 153, 153));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/profile.png"))); // NOI18N
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 120, 100));
+        image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/profile.png"))); // NOI18N
+        jPanel4.add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 120, 100));
 
         jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 160, 140));
 
@@ -277,10 +279,10 @@ cont.setText(session.getPhone());
     public javax.swing.JLabel email;
     public javax.swing.JLabel fullname;
     public javax.swing.JLabel fullname1;
+    private javax.swing.JLabel image;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

@@ -81,6 +81,9 @@ public class Userdashboard extends javax.swing.JFrame {
 
         payments.setBackground(new java.awt.Color(102, 102, 102));
         payments.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                paymentsMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 paymentsMouseEntered(evt);
             }
@@ -173,7 +176,8 @@ public class Userdashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void dashpaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpaneMouseClicked
-      
+      userprofile ul = new userprofile();
+      maindesktop.add(ul).setVisible(true);
     }//GEN-LAST:event_dashpaneMouseClicked
 
     private void dashpaneMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpaneMouseEntered
@@ -213,6 +217,12 @@ public class Userdashboard extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_dashlogoutActionPerformed
+
+    private void paymentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paymentsMouseClicked
+       internalpaymentsForm pm = new internalpaymentsForm();
+       maindesktop.add(pm).setVisible(true);
+     
+    }//GEN-LAST:event_paymentsMouseClicked
 
     /**
      * @param args the command line arguments
