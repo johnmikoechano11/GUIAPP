@@ -1,6 +1,8 @@
 package config;
 
 import java.sql.*;
+import static javax.management.remote.JMXConnectorFactory.connect;
+import static javax.management.remote.JMXConnectorFactory.connect;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
@@ -113,6 +115,19 @@ public class configclass {
         for (int i = 0; i < values.length; i++) {
             pst.setObject(i + 1, values[i]);
         }
-        return pst.executeQuery(); // caller must close ResultSet, PreparedStatement, Connection
+        return pst.executeQuery();
     }
+    
+public boolean isDuplicate(String sql) {
+ 
+    try (Connection conn = connectDB();
+         PreparedStatement pst = conn.prepareStatement(sql);
+         ResultSet rs = pst.executeQuery()) {
+        
+        return rs.next(); 
+    } catch (SQLException ex) {
+        System.out.println("Check Error: " + ex.getMessage());
+        return false;
+    }
+}
 }

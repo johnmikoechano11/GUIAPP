@@ -29,9 +29,10 @@ public class membersForm extends javax.swing.JFrame {
     public membersForm() {
         initComponents();
             m_dura.setModel(new javax.swing.SpinnerNumberModel(1, 1, 36, 1));
-            m_type.addActionListener(e -> setAutomaticPrice());
-m_dura.addChangeListener(e -> setAutomaticPrice());
-        setAutomaticPrice();
+    m_type.addActionListener(e -> updateMembershipDates());
+    m_dura.addChangeListener(e -> updateMembershipDates());
+    
+        updateMembershipDates();
     }
     
       public void close(){
@@ -64,23 +65,22 @@ int validateRegister() {
     return result;
 }
 
-public void setAutomaticPrice() {
+public void updateMembershipDates() {
     try {
-        String type = m_type.getSelectedItem().toString();
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy");
+        
+        m_start.setText(sdf.format(cal.getTime()));
+        
         int months = (Integer) m_dura.getValue();
-        double price = 0;
-
-        switch(type) {
-            case "Monthly": price = 500; break;
-            case "Vip": price = 1500; break;
-            case "Student": price = 350; break;
-        }
-
-        double total = price * months;
-        m_amount.setText(String.format("%.2f", total));
-
+        
+        cal.add(Calendar.MONTH, months);
+        
+        m_expiry.setText(sdf.format(cal.getTime()));
+        
     } catch (Exception e) {
-        m_amount.setText("0.00");
+   
+        System.out.println("Error calculating dates: " + e.getMessage());
     }
 }
       public String action;
@@ -103,7 +103,7 @@ public void setAutomaticPrice() {
         jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         wrong = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         update = new javax.swing.JPanel();
         firstname = new javax.swing.JLabel();
@@ -112,14 +112,48 @@ public void setAutomaticPrice() {
         m_type = new javax.swing.JComboBox<>();
         firstname2 = new javax.swing.JLabel();
         m_dura = new javax.swing.JSpinner();
-        m_amount = new javax.swing.JTextField();
         firstname3 = new javax.swing.JLabel();
-        firstname4 = new javax.swing.JLabel();
         m_id = new javax.swing.JLabel();
-        add1 = new javax.swing.JPanel();
+        add = add = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
+                int shadowSize = 5;
+                int borderRadius = 20;
+                int width = getWidth() - shadowSize * 2;
+                int height = getHeight() - shadowSize * 2;
+
+                // 1. Draw the Shadow
+                for (int i = 0; i < shadowSize; i++) {
+                    // Gradually fade the black color to create a soft blur
+                    g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); 
+                    g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);
+                }
+
+                // 2. Fill the Main Panel (White Card)
+                g2.setColor(getBackground()); // Uses the color from the Design tab
+                g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);
+
+                g2.dispose();
+            }
+        };
+        // This makes the area outside the rounded card transparent
+        add.setOpaque(false);
+
+        ;
         st_label = new javax.swing.JLabel();
         firstname5 = new javax.swing.JLabel();
         m_name = new javax.swing.JTextField();
+        firstname6 = new javax.swing.JLabel();
+        gender = new javax.swing.JComboBox<>();
+        firstname7 = new javax.swing.JLabel();
+        status = new javax.swing.JComboBox<>();
+        firstname4 = new javax.swing.JLabel();
+        firstname8 = new javax.swing.JLabel();
+        m_start = new javax.swing.JLabel();
+        m_expiry = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -128,15 +162,15 @@ public void setAutomaticPrice() {
         memberform.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         memberform.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel4.setBackground(new java.awt.Color(27, 42, 78));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("MEMBERS FORM");
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 220, 20));
+        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 220, 20));
 
         jPanel5.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -153,7 +187,7 @@ public void setAutomaticPrice() {
 
         jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, -1, 40));
 
-        wrong.setBackground(new java.awt.Color(51, 51, 51));
+        wrong.setBackground(new java.awt.Color(27, 42, 78));
         wrong.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 wrongMouseClicked(evt);
@@ -161,15 +195,17 @@ public void setAutomaticPrice() {
         });
         wrong.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/wrong.png"))); // NOI18N
-        wrong.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 70, 40));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("×");
+        wrong.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 30, 50));
 
-        jPanel4.add(wrong, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 0, 70, 60));
+        jPanel4.add(wrong, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 0, 70, 60));
 
         memberform.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 60));
 
-        jPanel3.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel3.setBackground(new java.awt.Color(244, 247, 246));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         update.setBackground(new java.awt.Color(102, 102, 102));
@@ -184,108 +220,142 @@ public void setAutomaticPrice() {
         update.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel3.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, 80, -1));
 
-        firstname.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        firstname.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        firstname.setForeground(new java.awt.Color(27, 42, 78));
         firstname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         firstname.setText("Contact:");
-        jPanel3.add(firstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 90, 30));
+        jPanel3.add(firstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 70, 30));
 
-        m_cont.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        m_cont.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        m_cont.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        m_cont.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        m_cont.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(209, 213, 216), java.awt.Color.darkGray, null, null));
         m_cont.setOpaque(false);
         m_cont.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 m_contActionPerformed(evt);
             }
         });
-        jPanel3.add(m_cont, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 240, 200, 30));
+        jPanel3.add(m_cont, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 200, 30));
 
-        firstname1.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        firstname1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        firstname1.setForeground(new java.awt.Color(27, 42, 78));
+        firstname1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         firstname1.setText("Id:");
-        jPanel3.add(firstname1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, 20, 30));
+        jPanel3.add(firstname1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 20, 30));
 
-        m_type.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        m_type.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        m_type.setForeground(new java.awt.Color(27, 42, 78));
         m_type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Monthly", "Vip", "Student" }));
         m_type.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 m_typeActionPerformed(evt);
             }
         });
-        jPanel3.add(m_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, -1, -1));
+        jPanel3.add(m_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 100, -1));
 
-        firstname2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        firstname2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        firstname2.setForeground(new java.awt.Color(27, 42, 78));
         firstname2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        firstname2.setText("Type:");
-        jPanel3.add(firstname2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 90, 30));
+        firstname2.setText("Start Date:");
+        jPanel3.add(firstname2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, 90, 30));
 
-        m_dura.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        m_dura.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(1759064640000L), null, java.util.Calendar.DAY_OF_MONTH));
+        m_dura.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        m_dura.setModel(new javax.swing.SpinnerNumberModel(1, 0, 12, 1));
         m_dura.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 m_duraStateChanged(evt);
             }
         });
-        jPanel3.add(m_dura, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, -1, 30));
+        jPanel3.add(m_dura, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, -1, 30));
 
-        m_amount.setEditable(false);
-        m_amount.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        m_amount.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        m_amount.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        m_amount.setOpaque(false);
-        m_amount.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                m_amountActionPerformed(evt);
-            }
-        });
-        jPanel3.add(m_amount, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, 120, 30));
-
-        firstname3.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        firstname3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        firstname3.setForeground(new java.awt.Color(27, 42, 78));
         firstname3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         firstname3.setText("Duration:");
-        jPanel3.add(firstname3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 90, 30));
+        jPanel3.add(firstname3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 100, 30));
+        jPanel3.add(m_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 200, 30));
 
-        firstname4.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        firstname4.setText("Amount:");
-        jPanel3.add(firstname4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 100, 30));
-        jPanel3.add(m_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 190, 30));
-
-        add1.setBackground(new java.awt.Color(204, 204, 204));
-        add1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        add1.addMouseListener(new java.awt.event.MouseAdapter() {
+        add.setBackground(new java.awt.Color(243, 156, 18));
+        add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        add.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                add1MouseClicked(evt);
+                addMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                add1MouseEntered(evt);
+                addMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                add1MouseExited(evt);
+                addMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                addMousePressed(evt);
             }
         });
-        add1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        add.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         st_label.setBackground(new java.awt.Color(255, 255, 255));
-        st_label.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        st_label.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        st_label.setForeground(new java.awt.Color(255, 255, 255));
         st_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         st_label.setText("Label");
-        add1.add(st_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 60, -1));
+        add.add(st_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 60, 50));
 
-        jPanel3.add(add1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 140, 40));
+        jPanel3.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 140, 50));
 
-        firstname5.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        firstname5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        firstname5.setForeground(new java.awt.Color(27, 42, 78));
+        firstname5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         firstname5.setText("Full Name:");
-        jPanel3.add(firstname5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 100, 30));
+        jPanel3.add(firstname5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 90, 30));
 
-        m_name.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        m_name.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        m_name.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        m_name.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        m_name.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(209, 213, 216), java.awt.Color.darkGray, null, null));
         m_name.setOpaque(false);
         m_name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 m_nameActionPerformed(evt);
             }
         });
-        jPanel3.add(m_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 200, 30));
+        jPanel3.add(m_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 200, 30));
+
+        firstname6.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        firstname6.setForeground(new java.awt.Color(27, 42, 78));
+        firstname6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        firstname6.setText("Type:");
+        jPanel3.add(firstname6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 50, 30));
+
+        gender.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        gender.setForeground(new java.awt.Color(27, 42, 78));
+        gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
+        jPanel3.add(gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, -1, -1));
+
+        firstname7.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        firstname7.setForeground(new java.awt.Color(27, 42, 78));
+        firstname7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        firstname7.setText("Gender:");
+        jPanel3.add(firstname7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 70, 30));
+
+        status.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        status.setForeground(new java.awt.Color(27, 42, 78));
+        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Inactive" }));
+        jPanel3.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 260, -1, -1));
+
+        firstname4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        firstname4.setForeground(new java.awt.Color(27, 42, 78));
+        firstname4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        firstname4.setText("Expiry Date:");
+        jPanel3.add(firstname4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 210, 100, 30));
+
+        firstname8.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        firstname8.setForeground(new java.awt.Color(27, 42, 78));
+        firstname8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        firstname8.setText("Status:");
+        jPanel3.add(firstname8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 260, 90, 30));
+
+        m_start.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(209, 213, 216), java.awt.Color.darkGray, null, null));
+        jPanel3.add(m_start, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 180, 30));
+
+        m_expiry.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(209, 213, 216), java.awt.Color.darkGray, null, null));
+        jPanel3.add(m_expiry, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 210, 180, 30));
 
         memberform.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 750, 380));
 
@@ -311,6 +381,7 @@ public void setAutomaticPrice() {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void updateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseEntered
@@ -322,6 +393,7 @@ public void setAutomaticPrice() {
     }//GEN-LAST:event_updateMouseExited
 
     private void m_contActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_contActionPerformed
+
         // TODO add your handling code here:
     }//GEN-LAST:event_m_contActionPerformed
 
@@ -353,91 +425,99 @@ public void setAutomaticPrice() {
     }
     }//GEN-LAST:event_wrongMouseClicked
 
-    private void m_amountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_amountActionPerformed
+    private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
+   if(validateRegister() != 1) return;
 
-    }//GEN-LAST:event_m_amountActionPerformed
-
-    private void add1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add1MouseClicked
-    int check = validateRegister();
-    if(check != 1){
-        JOptionPane.showMessageDialog(null, "All fields are required!");
-        return;
-    }
-
-    // Get common values
+    // 2. Collect Data (Arranged by your Form Layout)
+    // Left Side Columns
+    String id = m_id.getText();
     String name = m_name.getText().trim();
+    String gen = gender.getSelectedItem().toString(); 
+    String contact = m_cont.getText().trim();
     String type = m_type.getSelectedItem().toString();
     int months = (Integer) m_dura.getValue();
-    double amount = Double.parseDouble(m_amount.getText());
     
-    // Calculate start and expiry dates
-    Calendar cal = Calendar.getInstance();
-    java.util.Date startDate = cal.getTime();
-    cal.add(Calendar.MONTH, months);
-    java.util.Date expiryDate = cal.getTime();
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    String startStr = sdf.format(startDate);
-    String expiryStr = sdf.format(expiryDate);
+    // Right Side Columns
+    String stat = status.getSelectedItem().toString(); 
+    
+    // 3. Date Parsing (Converting UI Label to Database format)
+    SimpleDateFormat displayFormat = new SimpleDateFormat("MMMM dd, yyyy");
+    SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd");
+    
+    String startStr = "";
+    String expiryStr = "";
+    
+    try {
+        startStr = dbFormat.format(displayFormat.parse(m_start.getText()));
+        expiryStr = dbFormat.format(displayFormat.parse(m_expiry.getText()));
+    } catch (Exception e) {
+        // Fallback to current date if labels are unreadable
+        startStr = dbFormat.format(new java.util.Date());
+        expiryStr = startStr; 
+    }
 
     configclass dbc = new configclass();
 
+    // 4. Database Operations
     if(action.equals("Add")) {
-        String sql = "INSERT INTO members ("
-                   + "m_fname, m_type, m_amount, m_duration, contact, start_date, expiry_date"
-                   + ") VALUES ("
+        String sql = "INSERT INTO members (m_fname, m_gender, contact, m_type, m_duration, start_date, expiry_date, status) "
+                   + "VALUES ("
                    + "'" + name + "', "
+                   + "'" + gen + "', "
+                   + "'" + contact + "', "
                    + "'" + type + "', "
-                   + "'" + amount + "', "
                    + "'" + months + "', "
-                   + "'" + m_cont.getText().trim() + "', "
                    + "'" + startStr + "', "
-                   + "'" + expiryStr + "'"
-                   + ")";
-        int result = dbc.insertData(sql);
-        if(result == 1){
-            JOptionPane.showMessageDialog(null, "Member Successfully Registered!\nTotal: " + amount);
+                   + "'" + expiryStr + "', "
+                   + "'" + stat + "')";
+        
+        if(dbc.insertData(sql) == 1){
+            JOptionPane.showMessageDialog(null, "Member Successfully Registered!");
             close();
-        } else {
-            System.out.println("Saving Data Failed!");
         }
 
     } else if(action.equals("Update")) {
         String sql = "UPDATE members SET "
                    + "m_fname = '" + name + "', "
+                   + "m_gender = '" + gen + "', "
+                   + "contact = '" + contact + "', "
                    + "m_type = '" + type + "', "
-                   + "m_amount = '" + amount + "', "
                    + "m_duration = '" + months + "', "
-                   + "m_contact = '" + m_cont.getText().trim() + "', "
                    + "start_date = '" + startStr + "', "
-                   + "expiry_date = '" + expiryStr + "' "
-                   + "WHERE m_id = '" + m_id.getText() + "'";
+                   + "expiry_date = '" + expiryStr + "', "
+                   + "status = '" + stat + "' "
+                   + "WHERE m_id = '" + id + "'";
+        
         dbc.updateData(sql);
         JOptionPane.showMessageDialog(null, "Member Updated Successfully!");
         close();
     }
-    }//GEN-LAST:event_add1MouseClicked
+    }//GEN-LAST:event_addMouseClicked
     
-    private void add1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add1MouseEntered
+    private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered
+       add.setBackground(new Color(255, 179, 71));   
+    }//GEN-LAST:event_addMouseEntered
 
-    }//GEN-LAST:event_add1MouseEntered
-
-    private void add1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add1MouseExited
-
-    }//GEN-LAST:event_add1MouseExited
+    private void addMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseExited
+      add.setBackground(new Color(243, 156, 18)) ;  
+    }//GEN-LAST:event_addMouseExited
 
     private void m_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_nameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_m_nameActionPerformed
 
     private void m_typeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_typeActionPerformed
-      setAutomaticPrice();
+     
 
     }//GEN-LAST:event_m_typeActionPerformed
 
     private void m_duraStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_m_duraStateChanged
-       setAutomaticPrice();
-
+    
     }//GEN-LAST:event_m_duraStateChanged
+
+    private void addMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMousePressed
+        add.setBackground(new Color(211, 84, 0));
+    }//GEN-LAST:event_addMousePressed
 
     /**
      * @param args the command line arguments
@@ -476,26 +556,32 @@ public void setAutomaticPrice() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JPanel add1;
+    public javax.swing.JPanel add;
     private javax.swing.JLabel firstname;
     private javax.swing.JLabel firstname1;
     private javax.swing.JLabel firstname2;
     private javax.swing.JLabel firstname3;
     private javax.swing.JLabel firstname4;
     private javax.swing.JLabel firstname5;
+    private javax.swing.JLabel firstname6;
+    private javax.swing.JLabel firstname7;
+    private javax.swing.JLabel firstname8;
+    public javax.swing.JComboBox<String> gender;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    public javax.swing.JTextField m_amount;
     public javax.swing.JTextField m_cont;
     public javax.swing.JSpinner m_dura;
+    public javax.swing.JLabel m_expiry;
     public javax.swing.JLabel m_id;
     public javax.swing.JTextField m_name;
+    public javax.swing.JLabel m_start;
     public javax.swing.JComboBox<String> m_type;
     private javax.swing.JPanel memberform;
     public javax.swing.JLabel st_label;
+    public javax.swing.JComboBox<String> status;
     private javax.swing.JPanel update;
     private javax.swing.JPanel wrong;
     // End of variables declaration//GEN-END:variables

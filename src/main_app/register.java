@@ -6,24 +6,22 @@ import main_app.logIn;
 import config.configclass;
 import java.security.NoSuchAlgorithmException;
 import javax.swing.JOptionPane;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.FontMetrics;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author Admin
- */
+
 public class register extends javax.swing.JFrame {
-
-    /**
-     * Creates new form register
-     */
+   private final int[] buttonState = {0};
     public register() {
         initComponents();
+        this.setBackground(new java.awt.Color(0,0,0,0));
+   
     }
     
     int validateRegister(){
@@ -44,8 +42,33 @@ public class register extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        reg_panel = reg_panel = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
+                int shadowSize = 10;
+                int borderRadius = 35;
+                int width = getWidth() - shadowSize * 2;
+                int height = getHeight() - shadowSize * 2;
+
+                // 1. Draw the Shadow
+                for (int i = 0; i < shadowSize; i++) {
+                    // Gradually fade the black color to create a soft blur
+                    g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); 
+                    g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);
+                }
+
+                // 2. Fill the Main Panel (White Card)
+                g2.setColor(getBackground()); // Uses the color from the Design tab
+                g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);
+
+                g2.dispose();
+            }
+        };
+        // This makes the area outside the rounded card transparent
+        reg_panel.setOpaque(false);
         username1 = new javax.swing.JLabel();
         fname = new javax.swing.JTextField();
         email = new javax.swing.JTextField();
@@ -54,121 +77,164 @@ public class register extends javax.swing.JFrame {
         username4 = new javax.swing.JLabel();
         uname = new javax.swing.JTextField();
         con = new javax.swing.JTextField();
-        cpword = new javax.swing.JTextField();
-        pword = new javax.swing.JTextField();
         username6 = new javax.swing.JLabel();
         username7 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        register = 
+        register = new javax.swing.JButton("REGISTER") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                int width = getWidth();
+                int height = getHeight();
+                int borderRadius = 40;
+
+                // Dynamic shadow based on state
+                int shadowSize = (buttonState[0] == 2) ? 2 : (buttonState[0] == 1 ? 3 : 5);
+                int yOffset = (buttonState[0] == 2) ? 2 : 0; 
+
+                // Draw the Shadow (Darker orange/brown tint for a natural look)
+                for (int i = 0; i < shadowSize; i++) {
+                    g2.setColor(new Color(139, 69, 19, (shadowSize - i) * 10)); // SaddleBrown shadow
+                    g2.fillRoundRect(3, 3 + i + yOffset, width - 6, height - 10, borderRadius, borderRadius);
+                }
+
+                // --- UPDATED COLORS FOR REGISTER BUTTON ---
+                // Default: Vibrant Orange (#F39C12)
+                Color btnColor = new Color(243, 156, 18); 
+
+                // Hover: Lighter Amber (#FFB347)
+                if (buttonState[0] == 1) btnColor = new Color(255, 179, 71); 
+
+                // Pressed: Deep Orange (#E67E22)
+                if (buttonState[0] == 2) btnColor = new Color(230, 126, 34); 
+
+                g2.setColor(btnColor);
+                g2.fillRoundRect(0, yOffset, width, height - 10, borderRadius, borderRadius);
+
+                // White Text (Contrast is key!)
+                g2.setColor(Color.WHITE);
+                g2.setFont(new Font("Segoe UI", Font.BOLD, 14));
+                FontMetrics fm = g2.getFontMetrics();
+                int x = (width - fm.stringWidth(getText())) / 2;
+                int y = ((height - 10) + fm.getAscent()) / 2 - 2 + yOffset;
+                g2.drawString(getText(), x, y);
+
+                g2.dispose();
+            }
+        };
+
+        // 2. Setting dimensions
+        register.setPreferredSize(new java.awt.Dimension(150, 70)); 
+
+        // 3. Interactivity
+        register.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent e) { buttonState[0] = 1; register.repaint(); }
+            public void mouseExited(java.awt.event.MouseEvent e) { buttonState[0] = 0; register.repaint(); }
+            public void mousePressed(java.awt.event.MouseEvent e) { buttonState[0] = 2; register.repaint(); }
+            public void mouseReleased(java.awt.event.MouseEvent e) { buttonState[0] = 1; register.repaint(); }
+        });
+
+        register.setContentAreaFilled(false);
+        register.setBorderPainted(false);
+        register.setFocusPainted(false);
+        register.setOpaque(false);
         jLabel2 = new javax.swing.JLabel();
-        register = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        showpass = new javax.swing.JCheckBox();
+        cpword = new javax.swing.JPasswordField();
+        pword = new javax.swing.JPasswordField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel3.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        reg_panel.setBackground(new java.awt.Color(255, 255, 255));
+        reg_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         username1.setBackground(new java.awt.Color(204, 204, 204));
-        username1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        username1.setForeground(new java.awt.Color(255, 255, 255));
+        username1.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        username1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         username1.setText("Confirm Password:");
-        jPanel1.add(username1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, -1, -1));
+        reg_panel.add(username1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, -1, 20));
 
-        fname.setBackground(new java.awt.Color(204, 204, 204));
+        fname.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        fname.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(197, 160, 89), 1, true));
         fname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fnameActionPerformed(evt);
             }
         });
-        jPanel1.add(fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 230, 30));
+        reg_panel.add(fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 250, 40));
 
-        email.setBackground(new java.awt.Color(204, 204, 204));
+        email.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        email.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(197, 160, 89), 1, true));
         email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emailActionPerformed(evt);
             }
         });
-        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 230, 30));
+        reg_panel.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 250, 40));
 
         username2.setBackground(new java.awt.Color(204, 204, 204));
-        username2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        username2.setForeground(new java.awt.Color(255, 255, 255));
+        username2.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        username2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         username2.setText("Full Name:");
-        jPanel1.add(username2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        reg_panel.add(username2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, -1, -1));
 
         username3.setBackground(new java.awt.Color(204, 204, 204));
-        username3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        username3.setForeground(new java.awt.Color(255, 255, 255));
+        username3.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        username3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         username3.setText("Email:");
-        jPanel1.add(username3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
+        reg_panel.add(username3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, 20));
 
         username4.setBackground(new java.awt.Color(204, 204, 204));
-        username4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        username4.setForeground(new java.awt.Color(255, 255, 255));
+        username4.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        username4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         username4.setText("Password:");
-        jPanel1.add(username4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
+        reg_panel.add(username4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, 20));
 
-        uname.setBackground(new java.awt.Color(204, 204, 204));
+        uname.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        uname.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(197, 160, 89), 1, true));
         uname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 unameActionPerformed(evt);
             }
         });
-        jPanel1.add(uname, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 110, 230, 30));
+        reg_panel.add(uname, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, 250, 40));
 
-        con.setBackground(new java.awt.Color(204, 204, 204));
+        con.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        con.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(197, 160, 89), 1, true));
         con.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 conActionPerformed(evt);
             }
         });
-        jPanel1.add(con, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, 230, 30));
-
-        cpword.setBackground(new java.awt.Color(204, 204, 204));
-        cpword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cpwordActionPerformed(evt);
-            }
-        });
-        jPanel1.add(cpword, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 270, 230, 30));
-
-        pword.setBackground(new java.awt.Color(204, 204, 204));
-        pword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pwordActionPerformed(evt);
-            }
-        });
-        jPanel1.add(pword, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 230, 30));
+        reg_panel.add(con, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 250, 40));
 
         username6.setBackground(new java.awt.Color(204, 204, 204));
-        username6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        username6.setForeground(new java.awt.Color(255, 255, 255));
+        username6.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        username6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         username6.setText("Username:");
-        jPanel1.add(username6, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, -1, -1));
+        reg_panel.add(username6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, -1, 20));
 
         username7.setBackground(new java.awt.Color(204, 204, 204));
-        username7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        username7.setForeground(new java.awt.Color(255, 255, 255));
+        username7.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        username7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         username7.setText("Phone Number:");
-        jPanel1.add(username7, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, -1, -1));
-
-        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel2.setText("REGISTRATION");
-        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 220, 30));
-
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 60));
+        reg_panel.add(username7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, -1, 20));
 
         register.setBackground(new java.awt.Color(255, 255, 255));
         register.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         register.setForeground(new java.awt.Color(51, 51, 51));
-        register.setText("Register");
+        register.setText("REGISTER");
+        register.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         register.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 registerMouseClicked(evt);
@@ -185,13 +251,81 @@ public class register extends javax.swing.JFrame {
                 registerActionPerformed(evt);
             }
         });
-        jPanel1.add(register, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 220, 30));
+        reg_panel.add(register, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 460, 250, 40));
 
-        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 540, 430));
+        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 32)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(44, 62, 80));
+        jLabel2.setText("REGISTRATION");
+        reg_panel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 270, 30));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 520));
+        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Create your fitness Dashboard");
+        reg_panel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 250, 40));
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/phone.png"))); // NOI18N
+        reg_panel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 50, 70));
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/pre_workout.png"))); // NOI18N
+        reg_panel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 450, 110, 90));
+
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dumbell.png"))); // NOI18N
+        reg_panel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 440, 130, 120));
+
+        showpass.setBackground(new java.awt.Color(255, 255, 255));
+        showpass.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        showpass.setText("Show Password");
+        showpass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        showpass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showpassActionPerformed(evt);
+            }
+        });
+        reg_panel.add(showpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 440, -1, 20));
+
+        cpword.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        cpword.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(197, 160, 89), 1, true));
+        cpword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cpwordActionPerformed(evt);
+            }
+        });
+        reg_panel.add(cpword, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, 250, 40));
+
+        pword.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        pword.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(197, 160, 89), 1, true));
+        pword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pwordActionPerformed(evt);
+            }
+        });
+        reg_panel.add(pword, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 250, 40));
+
+        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(52, 73, 94));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Login Here");
+        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+        reg_panel.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 500, 70, -1));
+
+        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Already have a account?");
+        reg_panel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 500, 160, -1));
+
+        getContentPane().add(reg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 390, 530));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void fnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnameActionPerformed
@@ -210,14 +344,6 @@ public class register extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_conActionPerformed
 
-    private void cpwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cpwordActionPerformed
-
-    private void pwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pwordActionPerformed
-
     private void registerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerMouseEntered
 
     }//GEN-LAST:event_registerMouseEntered
@@ -231,40 +357,72 @@ public class register extends javax.swing.JFrame {
     }//GEN-LAST:event_registerActionPerformed
 
     private void registerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerMouseClicked
-       int check = validateRegister();
-        if(check == 1){
-            
-
-                String pass;
-            try {
-                pass = PasswordHasher.hashPassword(pword.getText());
-          
+                                    
+    int check = validateRegister();
+    
+    if(check == 1) {
+        configclass dbc = new configclass();
         
-            configclass dbc = new configclass();
-            int result = dbc.insertData("INSERT INTO users (u_fname, u_email, u_password,  u_username, u_phone, u_status) "
-                    + "VALUES ('"+fname.getText()+"', '"+email.getText()+"', '"+pass+"', '"+uname.getText()+"', '"+con.getText()+"', 'Pending')");
-            if(result == 1){
-                JOptionPane.showMessageDialog(null, "Successfully Registered!");
-                    logIn  lf = new logIn();
-                    this.dispose();
-                    lf.setVisible(true);
-              
-                    
-            }
-            else{
-                 System.out.println("Saving Data Failed!");
-            }
-              } catch (NoSuchAlgorithmException ex) {
-                System.out.println(""+ex);
-            }
-          
-            
-        }else{
-             JOptionPane.showMessageDialog(null, "All fields are required!");
+       
+        String checkQuery = "SELECT * FROM users WHERE u_username = '" + uname.getText() + "' OR u_email = '" + email.getText() + "'";
+        if (dbc.isDuplicate(checkQuery)) {
+            JOptionPane.showMessageDialog(null, "Username or Email is already taken!");
+            return; 
         }
- 
+
+     
+        if (!pword.getText().equals(cpword.getText())) {
+            JOptionPane.showMessageDialog(null, "Passwords do not match!");
+            return;
+        }
+
+        try {
+            String pass = PasswordHasher.hashPassword(pword.getText());
+            
+            // 3. INSERT: Added 'User' as the default account type
+            String sql = "INSERT INTO users (u_fname, u_email, u_password, u_username, u_phone, u_type, u_status) "
+                       + "VALUES ('"+fname.getText()+"', '"+email.getText()+"', '"+pass+"', '"+uname.getText()+"', '"+con.getText()+"', 'User', 'Pending')";
+
+            int result = dbc.insertData(sql);
+            
+            if(result == 1) {
+                JOptionPane.showMessageDialog(null, "Successfully Registered!");
+                logIn lf = new logIn();
+                this.dispose();
+                lf.setVisible(true);
+            } else {
+                System.out.println("Saving Data Failed!");
+            }
+        } catch (NoSuchAlgorithmException ex) {
+            System.out.println("Hashing Error: " + ex);
+        }
         
+    } else {
+        JOptionPane.showMessageDialog(null, "All fields are required!");
+    }       
     }//GEN-LAST:event_registerMouseClicked
+
+    private void showpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showpassActionPerformed
+        if (showpass.isSelected()) {
+            cpword.setEchoChar((char)0); // Now this works!
+        } else {
+            cpword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_showpassActionPerformed
+
+    private void cpwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpwordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cpwordActionPerformed
+
+    private void pwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pwordActionPerformed
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        logIn  ln= new logIn();
+        ln.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel8MouseClicked
 
     /**
      * @param args the command line arguments
@@ -303,15 +461,20 @@ public class register extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField con;
-    private javax.swing.JTextField cpword;
+    private javax.swing.JPasswordField cpword;
     private javax.swing.JTextField email;
     private javax.swing.JTextField fname;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField pword;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPasswordField pword;
+    private javax.swing.JPanel reg_panel;
     private javax.swing.JButton register;
+    private javax.swing.JCheckBox showpass;
     private javax.swing.JTextField uname;
     private javax.swing.JLabel username1;
     private javax.swing.JLabel username2;

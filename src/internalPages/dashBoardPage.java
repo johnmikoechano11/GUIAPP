@@ -84,7 +84,7 @@ public class dashBoardPage extends javax.swing.JInternalFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/manager-user.png"))); // NOI18N
         manageUser.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 110, 100));
 
-        jPanel2.add(manageUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, 150, 130));
+        jPanel2.add(manageUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 150, 130));
 
         members.setBackground(new java.awt.Color(204, 204, 204));
         members.setPreferredSize(new java.awt.Dimension(160, 160));
@@ -111,7 +111,7 @@ public class dashBoardPage extends javax.swing.JInternalFrame {
         username3.setText("MEMBERS");
         members.add(username3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 100, -1));
 
-        jPanel2.add(members, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 150, 130));
+        jPanel2.add(members, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 150, 130));
 
         settings.setBackground(new java.awt.Color(204, 204, 204));
         settings.setPreferredSize(new java.awt.Dimension(160, 160));
@@ -135,9 +135,9 @@ public class dashBoardPage extends javax.swing.JInternalFrame {
         username4.setText("SETTINGS");
         settings.add(username4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 110, -1));
 
-        jPanel2.add(settings, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 110, 150, 130));
+        jPanel2.add(settings, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, 150, 130));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 330));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 260));
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {

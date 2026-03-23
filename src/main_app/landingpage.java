@@ -108,6 +108,9 @@ boolean isHovered = false;
         home.setMinimumSize(new java.awt.Dimension(41, 70));
         home.setPreferredSize(new java.awt.Dimension(41, 70));
         home.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homeMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 homeMouseEntered(evt);
             }
@@ -393,6 +396,12 @@ home.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, gap));
     private void aboutMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_aboutMousePressed
+
+    private void homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMouseClicked
+      landingpage le = new landingpage();
+      le.setVisible(true);
+      this.dispose();
+    }//GEN-LAST:event_homeMouseClicked
 
     /**
      * @param args the command line arguments

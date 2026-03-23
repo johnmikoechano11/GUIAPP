@@ -203,6 +203,7 @@ public class logIn extends javax.swing.JFrame {
         sign.setForeground(new java.awt.Color(51, 51, 51));
         sign.setText("LOGIN");
         sign.setActionCommand("Login");
+        sign.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         sign.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 signMouseEntered(evt);
@@ -244,6 +245,7 @@ public class logIn extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(52, 73, 94));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Register below");
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
@@ -313,14 +315,14 @@ public class logIn extends javax.swing.JFrame {
             singletonInstance.setPhone(rs.getString("u_phone"));
             singletonInstance.setStatus(status);
             singletonInstance.setType(role);
-
-            // Open dashboards based on role
+            config.imageSession.getInstance().setImagePath(rs.getString("Image"));
+            
             if (role.equalsIgnoreCase("Admin")) {
-                dashboard admin = new dashboard(); // your admin dashboard JFrame
+                dashboard admin = new dashboard();
                 this.dispose();
                 admin.setVisible(true);
             } else {
-                Userdashboard userDash = new Userdashboard(); // your user dashboard JFrame
+                Userdashboard userDash = new Userdashboard();
                 this.dispose();
                 userDash.setVisible(true);
             }

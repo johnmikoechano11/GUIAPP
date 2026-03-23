@@ -35,51 +35,46 @@ public class Userdashboard extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         navbar = new javax.swing.JPanel();
-        dashpane = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         payments = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         userpane = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        dashpane = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        accounts = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
         dashlogout = new javax.swing.JButton();
         maindesktop = new javax.swing.JDesktopPane();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setLayout(null);
 
-        navbar.setBackground(new java.awt.Color(102, 102, 102));
+        navbar.setBackground(new java.awt.Color(27, 42, 78));
+        navbar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         navbar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        dashpane.setBackground(new java.awt.Color(102, 102, 102));
-        dashpane.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dashpaneMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                dashpaneMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                dashpaneMouseExited(evt);
-            }
-        });
-        dashpane.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logo.png"))); // NOI18N
+        navbar.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 160, 110));
 
-        jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("ACCOUNT");
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
-            }
-        });
-        dashpane.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 80, 20));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icon.png"))); // NOI18N
+        navbar.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 120, 70));
 
-        navbar.add(dashpane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 160, 40));
-
-        payments.setBackground(new java.awt.Color(102, 102, 102));
+        payments.setBackground(new java.awt.Color(27, 42, 78));
+        payments.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        payments.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         payments.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 paymentsMouseClicked(evt);
@@ -90,17 +85,28 @@ public class Userdashboard extends javax.swing.JFrame {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 paymentsMouseExited(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                paymentsMousePressed(evt);
+            }
         });
         payments.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel8.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("PAYMENTS");
-        payments.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 80, 20));
+        jLabel8.setText("Payments");
+        payments.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 90, 40));
 
-        navbar.add(payments, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 160, 40));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/payments.png"))); // NOI18N
+        payments.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 40));
 
-        userpane.setBackground(new java.awt.Color(102, 102, 102));
+        navbar.add(payments, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 200, 40));
+
+        userpane.setBackground(new java.awt.Color(27, 42, 78));
+        userpane.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        userpane.setForeground(new java.awt.Color(255, 255, 255));
+        userpane.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         userpane.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 userpaneMouseClicked(evt);
@@ -111,20 +117,96 @@ public class Userdashboard extends javax.swing.JFrame {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 userpaneMouseExited(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                userpaneMousePressed(evt);
+            }
         });
         userpane.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("MEMBERSHIP");
-        userpane.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 90, -1));
+        jLabel6.setText("User");
+        userpane.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 5, 70, 30));
 
-        navbar.add(userpane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 160, 40));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/User.png"))); // NOI18N
+        userpane.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, -1));
+
+        navbar.add(userpane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 200, 40));
+
+        dashpane.setBackground(new java.awt.Color(27, 42, 78));
+        dashpane.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        dashpane.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        dashpane.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dashpaneMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                dashpaneMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                dashpaneMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                dashpaneMousePressed(evt);
+            }
+        });
+        dashpane.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Dashboard");
+        dashpane.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 110, -1));
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dash.png"))); // NOI18N
+        dashpane.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 40));
+
+        navbar.add(dashpane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 200, 40));
+
+        accounts.setBackground(new java.awt.Color(27, 42, 78));
+        accounts.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        accounts.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        accounts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                accountsMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                accountsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                accountsMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                accountsMousePressed(evt);
+            }
+        });
+        accounts.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Accounts");
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
+        accounts.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 5, 80, 30));
+
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/account.png"))); // NOI18N
+        accounts.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 40));
+
+        navbar.add(accounts, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 200, 40));
 
         jPanel1.add(navbar);
-        navbar.setBounds(0, 60, 160, 360);
+        navbar.setBounds(0, 0, 200, 510);
 
-        header.setBackground(new java.awt.Color(0, 0, 0));
+        header.setBackground(new java.awt.Color(74, 90, 150));
+        header.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         dashlogout.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -134,12 +216,12 @@ public class Userdashboard extends javax.swing.JFrame {
                 dashlogoutActionPerformed(evt);
             }
         });
-        header.add(dashlogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 100, 40));
+        header.add(dashlogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, 100, 40));
 
         jPanel1.add(header);
-        header.setBounds(0, 0, 800, 60);
+        header.setBounds(200, 0, 670, 70);
 
-        maindesktop.setBackground(new java.awt.Color(153, 153, 153));
+        maindesktop.setBackground(new java.awt.Color(255, 255, 255));
         maindesktop.setAutoscrolls(true);
         maindesktop.setPreferredSize(new java.awt.Dimension(760, 420));
 
@@ -147,67 +229,43 @@ public class Userdashboard extends javax.swing.JFrame {
         maindesktop.setLayout(maindesktopLayout);
         maindesktopLayout.setHorizontalGroup(
             maindesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 640, Short.MAX_VALUE)
+            .addGap(0, 670, Short.MAX_VALUE)
         );
         maindesktopLayout.setVerticalGroup(
             maindesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 360, Short.MAX_VALUE)
+            .addGap(0, 390, Short.MAX_VALUE)
         );
 
         jPanel1.add(maindesktop);
-        maindesktop.setBounds(160, 60, 640, 360);
+        maindesktop.setBounds(200, 70, 670, 390);
+
+        jPanel5.setBackground(new java.awt.Color(247, 250, 252));
+        jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, null));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setBackground(new java.awt.Color(113, 128, 150));
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(74, 85, 104));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("@ 2026 Gym Management System");
+        jPanel5.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 230, 50));
+
+        jPanel1.add(jPanel5);
+        jPanel5.setBounds(200, 460, 672, 50);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel5MouseClicked
-
-    private void dashpaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpaneMouseClicked
-      userprofile ul = new userprofile();
-      maindesktop.add(ul).setVisible(true);
-    }//GEN-LAST:event_dashpaneMouseClicked
-
-    private void dashpaneMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpaneMouseEntered
-        dashpane.setBackground(bodycolor);
-    }//GEN-LAST:event_dashpaneMouseEntered
-
-    private void dashpaneMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpaneMouseExited
-        dashpane.setBackground(navcolor);
-    }//GEN-LAST:event_dashpaneMouseExited
-
-    private void paymentsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paymentsMouseEntered
-        payments.setBackground(bodycolor);
-    }//GEN-LAST:event_paymentsMouseEntered
-
-    private void paymentsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paymentsMouseExited
-        payments.setBackground(navcolor);
-    }//GEN-LAST:event_paymentsMouseExited
-
-    private void userpaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpaneMouseClicked
-        membersForm mm = new membersForm();
-        maindesktop.add(mm).setVisible(true);
-    }//GEN-LAST:event_userpaneMouseClicked
-
-    private void userpaneMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpaneMouseEntered
-        userpane.setBackground(bodycolor);
-    }//GEN-LAST:event_userpaneMouseEntered
-
-    private void userpaneMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpaneMouseExited
-        userpane.setBackground(navcolor);
-    }//GEN-LAST:event_userpaneMouseExited
 
     private void dashlogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashlogoutActionPerformed
         int a = javax.swing.JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Select", javax.swing.JOptionPane.YES_NO_OPTION);
@@ -219,10 +277,76 @@ public class Userdashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_dashlogoutActionPerformed
 
     private void paymentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paymentsMouseClicked
-       internalpaymentsForm pm = new internalpaymentsForm();
-       maindesktop.add(pm).setVisible(true);
-     
+        Payments_page pm = new Payments_page();
+        maindesktop.add(pm).setVisible(true);
     }//GEN-LAST:event_paymentsMouseClicked
+
+    private void paymentsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paymentsMouseEntered
+        payments.setBackground(new Color(243,156,18));
+    }//GEN-LAST:event_paymentsMouseEntered
+
+    private void paymentsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paymentsMouseExited
+        payments.setBackground(new Color(27,42,78));
+    }//GEN-LAST:event_paymentsMouseExited
+
+    private void paymentsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paymentsMousePressed
+        payments.setBackground(new Color(211,84,0));
+    }//GEN-LAST:event_paymentsMousePressed
+
+    private void userpaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpaneMouseClicked
+        manageUser ur = new manageUser();
+        maindesktop.add(ur).setVisible(true);
+    }//GEN-LAST:event_userpaneMouseClicked
+
+    private void userpaneMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpaneMouseEntered
+        userpane.setBackground(new Color(243,156,18));
+    }//GEN-LAST:event_userpaneMouseEntered
+
+    private void userpaneMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpaneMouseExited
+        userpane.setBackground(new Color(27,42,78));
+    }//GEN-LAST:event_userpaneMouseExited
+
+    private void userpaneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpaneMousePressed
+        userpane.setBackground(new Color(211,84,0));
+    }//GEN-LAST:event_userpaneMousePressed
+
+    private void dashpaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpaneMouseClicked
+        dashBoardPage dbp = new dashBoardPage();
+        maindesktop.add(dbp).setVisible(true);
+    }//GEN-LAST:event_dashpaneMouseClicked
+
+    private void dashpaneMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpaneMouseEntered
+        dashpane.setBackground(new Color(243,156,18));
+    }//GEN-LAST:event_dashpaneMouseEntered
+
+    private void dashpaneMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpaneMouseExited
+        dashpane.setBackground(new Color(27,42,78));
+    }//GEN-LAST:event_dashpaneMouseExited
+
+    private void dashpaneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpaneMousePressed
+        dashpane.setBackground(new Color(211,84,0));
+    }//GEN-LAST:event_dashpaneMousePressed
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void accountsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountsMouseClicked
+        userprofile ue = new userprofile();
+        maindesktop.add(ue).setVisible(true);
+    }//GEN-LAST:event_accountsMouseClicked
+
+    private void accountsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountsMouseEntered
+        accounts.setBackground(new Color(243,156,18));
+    }//GEN-LAST:event_accountsMouseEntered
+
+    private void accountsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountsMouseExited
+        accounts.setBackground(new Color(27,42,78));
+    }//GEN-LAST:event_accountsMouseExited
+
+    private void accountsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountsMousePressed
+        accounts.setBackground(new Color(211,84,0));
+    }//GEN-LAST:event_accountsMousePressed
 
     /**
      * @param args the command line arguments
@@ -260,13 +384,23 @@ public class Userdashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel accounts;
     private javax.swing.JButton dashlogout;
     private javax.swing.JPanel dashpane;
     private javax.swing.JPanel header;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel5;
     public javax.swing.JDesktopPane maindesktop;
     private javax.swing.JPanel navbar;
     private javax.swing.JPanel payments;
