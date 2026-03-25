@@ -5,9 +5,14 @@
  */
 package internalPages;
 
+import config.configclass;
 import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import internalPages.manageUser;
+import java.awt.Component;
+import java.awt.Font;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 /**
  *
  * @author Admin
@@ -23,11 +28,88 @@ public class dashBoardPage extends javax.swing.JInternalFrame {
       this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
       BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
       bi.setNorthPane(null);
-    }
-     Color navcolor = new Color (102,102,102);
-     Color headcolor = new Color (51,51,51);
-     Color bodycolor = new Color (153,153,153);
       
+      displaydata();
+      
+       table.setRowHeight(30);
+       table.setShowGrid(false);
+       table.setIntercellSpacing(new java.awt.Dimension(0,0));
+       table.setBackground(Color.WHITE);
+       table.setBorder(null);
+       
+       
+    table.getTableHeader().setOpaque(false);
+    table.getTableHeader().setPreferredSize(new java.awt.Dimension(100, 35));
+    
+    table.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        setBackground(new Color(240, 240, 240)); 
+        setForeground(new Color(51, 51, 51));
+        
+
+        setFont(new Font("Segoe UI", Font.BOLD, 16));
+        
+
+        setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10)); 
+        
+        return this;
+    }
+});
+    
+    table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        
+        c.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        
+        if (isSelected) {
+          
+            c.setBackground(new Color(243, 156, 18)); 
+            c.setForeground(Color.WHITE); 
+        } else {
+            
+            c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(248, 249, 250));
+            c.setForeground(new Color(27, 42, 78));
+        }
+
+        setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10)); 
+        
+        return c;
+    }
+});
+  
+ 
+javax.swing.border.Border line = javax.swing.BorderFactory.createLineBorder(new Color(200, 200, 200), 2);
+
+
+javax.swing.border.Border padding = javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5);
+
+
+jScrollPane1.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, padding));
+
+
+jScrollPane1.setBackground(Color.WHITE);
+jScrollPane1.getViewport().setBackground(Color.WHITE);
+    }
+void displaydata() {
+    configclass con = new configclass(); 
+
+    String query = "SELECT m.m_fname AS 'Member Name', "
+                 + "wp.trainer AS 'Trainer', "
+                 + "t.t_amount AS 'Amount', "
+                 + "t.t_date AS 'Date' "
+                 + "FROM transactions t "
+                 + "JOIN members m ON t.m_id = m.m_id "
+                 + "JOIN workout_plans wp ON t.m_id = wp.m_id";
+
+
+    con.displayData(query, table); 
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,212 +119,301 @@ public class dashBoardPage extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        manageUser = new javax.swing.JPanel();
-        username1 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        members = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        username3 = new javax.swing.JLabel();
-        settings = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        username4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = jPanel2 = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
+                int shadowSize = 5;
+                int borderRadius = 20;
+                int width = getWidth() - shadowSize * 2;
+                int height = getHeight() - shadowSize * 2;
+
+                // 1. Draw the Shadow
+                for (int i = 0; i < shadowSize; i++) {
+                    // Gradually fade the black color to create a soft blur
+                    g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); 
+                    g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);
+                }
+
+                // 2. Fill the Main Panel (White Card)
+                g2.setColor(getBackground()); // Uses the color from the Design tab
+                g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);
+
+                g2.dispose();
+            }
+        };
+        // This makes the area outside the rounded card transparent
+        jPanel2.setOpaque(false);
+        ;
+        jPanel6 = jPanel6 = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
+                int shadowSize = 5;
+                int borderRadius = 20;
+                int width = getWidth() - shadowSize * 2;
+                int height = getHeight() - shadowSize * 2;
+
+                // 1. Draw the Shadow
+                for (int i = 0; i < shadowSize; i++) {
+                    // Gradually fade the black color to create a soft blur
+                    g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); 
+                    g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);
+                }
+
+                // 2. Fill the Main Panel (White Card)
+                g2.setColor(getBackground()); // Uses the color from the Design tab
+                g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);
+
+                g2.dispose();
+            }
+        };
+        // This makes the area outside the rounded card transparent
+        jPanel6.setOpaque(false);
+        ;
+        jLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel3 = jPanel3 = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
+                int shadowSize = 5;
+                int borderRadius = 20;
+                int width = getWidth() - shadowSize * 2;
+                int height = getHeight() - shadowSize * 2;
+
+                // 1. Draw the Shadow
+                for (int i = 0; i < shadowSize; i++) {
+                    // Gradually fade the black color to create a soft blur
+                    g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); 
+                    g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);
+                }
+
+                // 2. Fill the Main Panel (White Card)
+                g2.setColor(getBackground()); // Uses the color from the Design tab
+                g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);
+
+                g2.dispose();
+            }
+        };
+        // This makes the area outside the rounded card transparent
+        jPanel3.setOpaque(false);
+        ;
+        jPanel7 = jPanel7 = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
+                int shadowSize = 5;
+                int borderRadius = 20;
+                int width = getWidth() - shadowSize * 2;
+                int height = getHeight() - shadowSize * 2;
+
+                // 1. Draw the Shadow
+                for (int i = 0; i < shadowSize; i++) {
+                    // Gradually fade the black color to create a soft blur
+                    g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); 
+                    g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);
+                }
+
+                // 2. Fill the Main Panel (White Card)
+                g2.setColor(getBackground()); // Uses the color from the Design tab
+                g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);
+
+                g2.dispose();
+            }
+        };
+        // This makes the area outside the rounded card transparent
+        jPanel7.setOpaque(false);
+        ;
+        jLabel2 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel4 = jPanel4 = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
+                int shadowSize = 5;
+                int borderRadius = 20;
+                int width = getWidth() - shadowSize * 2;
+                int height = getHeight() - shadowSize * 2;
+
+                // 1. Draw the Shadow
+                for (int i = 0; i < shadowSize; i++) {
+                    // Gradually fade the black color to create a soft blur
+                    g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); 
+                    g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);
+                }
+
+                // 2. Fill the Main Panel (White Card)
+                g2.setColor(getBackground()); // Uses the color from the Design tab
+                g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);
+
+                g2.dispose();
+            }
+        };
+        // This makes the area outside the rounded card transparent
+        jPanel4.setOpaque(false);
+        ;
+        jPanel8 = jPanel8 = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
+                int shadowSize = 5;
+                int borderRadius = 20;
+                int width = getWidth() - shadowSize * 2;
+                int height = getHeight() - shadowSize * 2;
+
+                // 1. Draw the Shadow
+                for (int i = 0; i < shadowSize; i++) {
+                    // Gradually fade the black color to create a soft blur
+                    g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); 
+                    g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);
+                }
+
+                // 2. Fill the Main Panel (White Card)
+                g2.setColor(getBackground()); // Uses the color from the Design tab
+                g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);
+
+                g2.dispose();
+            }
+        };
+        // This makes the area outside the rounded card transparent
+        jPanel8.setOpaque(false);
+        ;
+        jLabel3 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBackground(new java.awt.Color(243, 156, 18));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel5.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("GYM MANAGEMENT SYSTEM");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 490, -1));
-
-        manageUser.setBackground(new java.awt.Color(204, 204, 204));
-        manageUser.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                manageUserMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                manageUserMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                manageUserMouseExited(evt);
-            }
-        });
-        manageUser.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        username1.setBackground(new java.awt.Color(0, 0, 0));
-        username1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        username1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        username1.setText("MANAGE USER");
-        manageUser.add(username1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 110, -1));
+        jPanel6.setBackground(new java.awt.Color(230, 126, 34));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/manager-user.png"))); // NOI18N
-        manageUser.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 110, 100));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/members (2).png"))); // NOI18N
+        jPanel6.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 50, 40));
 
-        jPanel2.add(manageUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 150, 130));
+        jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 50, 60));
 
-        members.setBackground(new java.awt.Color(204, 204, 204));
-        members.setPreferredSize(new java.awt.Dimension(160, 160));
-        members.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                membersMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                membersMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                membersMouseExited(evt);
-            }
-        });
-        members.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("0");
+        jLabel5.setToolTipText("");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Members");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, -1, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 190, 100));
+
+        jPanel3.setBackground(new java.awt.Color(39, 174, 96));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel7.setBackground(new java.awt.Color(33, 145, 80));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/new_user.png"))); // NOI18N
+        jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 50, -1));
+
+        jPanel3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 50, 60));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("0");
+        jLabel7.setToolTipText("");
+        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Transactions");
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 70, 120, -1));
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 190, 100));
+
+        jPanel4.setBackground(new java.awt.Color(127, 179, 213));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel8.setBackground(new java.awt.Color(93, 173, 226));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/members.png"))); // NOI18N
-        members.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 100, 60));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/payments.png"))); // NOI18N
+        jPanel8.add(jLabel3);
 
-        username3.setBackground(new java.awt.Color(0, 0, 0));
-        username3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        username3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        username3.setText("MEMBERS");
-        members.add(username3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 100, -1));
+        jPanel4.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 50, 60));
 
-        jPanel2.add(members, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 150, 130));
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("0");
+        jLabel9.setToolTipText("");
+        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
 
-        settings.setBackground(new java.awt.Color(204, 204, 204));
-        settings.setPreferredSize(new java.awt.Dimension(160, 160));
-        settings.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                settingsMouseEntered(evt);
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Payments");
+        jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 70, 100, -1));
+
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 190, 100));
+
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
             }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                settingsMouseExited(evt);
-            }
-        });
-        settings.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        ));
+        jScrollPane1.setViewportView(table);
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/settings.png"))); // NOI18N
-        settings.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 90, 100));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 630, 240));
 
-        username4.setBackground(new java.awt.Color(0, 0, 0));
-        username4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        username4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        username4.setText("SETTINGS");
-        settings.add(username4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 110, -1));
-
-        jPanel2.add(settings, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, 150, 130));
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 260));
-
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
-        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel1MouseEntered(evt);
-            }
-        });
-        jPanel1.setLayout(null);
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 930, 260));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 390));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void manageUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageUserMouseEntered
-        manageUser.setBackground(navcolor);
-    }//GEN-LAST:event_manageUserMouseEntered
-
-    private void manageUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageUserMouseExited
-         manageUser.setBackground(headcolor);
-    }//GEN-LAST:event_manageUserMouseExited
-
-    private void membersMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_membersMouseEntered
-        members.setBackground(navcolor);
-    }//GEN-LAST:event_membersMouseEntered
-
-    private void membersMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_membersMouseExited
-       members.setBackground(headcolor);
-    }//GEN-LAST:event_membersMouseExited
-
-    private void jPanel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel1MouseEntered
-
-    private void settingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseEntered
-      settings.setBackground(navcolor);
-    }//GEN-LAST:event_settingsMouseEntered
-
-    private void settingsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseExited
-     settings.setBackground(headcolor);
-    }//GEN-LAST:event_settingsMouseExited
-
-    private void membersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_membersMouseClicked
-   // 1. Get the main window without using the word "dashboard"
-    javax.swing.JFrame topFrame = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
-    
-    try {
-        // 2. Find your blue area (maindesktop) inside that window
-        java.lang.reflect.Field desktopField = topFrame.getClass().getDeclaredField("maindesktop");
-        desktopField.setAccessible(true);
-        javax.swing.JDesktopPane desktop = (javax.swing.JDesktopPane) desktopField.get(topFrame);
-        
-        // 3. Clear and show the Member page
-        desktop.removeAll();
-        member m = new member();
-        desktop.add(m).setVisible(true);
-        
-        // 4. Update the screen
-        desktop.revalidate();
-        desktop.repaint();
-        
-    } catch (Exception e) {
-        System.out.println("Error: " + e.getMessage());
-    }
-    }//GEN-LAST:event_membersMouseClicked
-
-    private void manageUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageUserMouseClicked
-    try {
-        // 1. Create the internal frame from the internalPages package
-        internalPages.manageUser userPage = new internalPages.manageUser();
-        
-        // 2. Get the main window (your dashBoard)
-        Object topFrame = javax.swing.SwingUtilities.getWindowAncestor(this);
-        
-        // 3. Find the 'maindesktop' variable inside the dashBoard class
-        java.lang.reflect.Field desktopField = topFrame.getClass().getDeclaredField("maindesktop");
-        desktopField.setAccessible(true);
-        javax.swing.JDesktopPane desktop = (javax.swing.JDesktopPane) desktopField.get(topFrame);
-        
-        // 4. Clear the current view and show the User page
-        desktop.removeAll();
-        desktop.add(userPage).setVisible(true);
-        
-        // 5. Refresh the UI
-        desktop.revalidate();
-        desktop.repaint();
-        
-    } catch (Exception e) {
-        // This will print if the variable name 'maindesktop' is spelled wrong
-        System.out.println("Error: " + e.getMessage());
-    }
-    }//GEN-LAST:event_manageUserMouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel manageUser;
-    private javax.swing.JPanel members;
-    private javax.swing.JPanel settings;
-    private javax.swing.JLabel username1;
-    private javax.swing.JLabel username3;
-    private javax.swing.JLabel username4;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }
