@@ -105,9 +105,18 @@ jScrollPane1.getViewport().setBackground(Color.WHITE);
 
 public void displayData() {
     config.configclass cc = new config.configclass();
-    cc.displayData("SELECT t_id as 'ID', m_id as 'Member ID', r_id as 'Payment ID', " // Added comma here
-                 + "t_amount as 'Amount', t_method as 'Method', "
-                 + "t_date as 'Date', t_status as 'Status' FROM transactions", transaction_table);
+    
+
+    String query = "SELECT "
+                 + "t.t_id AS 'Transaction ID', "
+                 + "m.m_fname AS 'Member Name', " 
+                 + "t.t_amount AS 'Amount', "
+                 + "t.t_date AS 'Date', "
+                 + "t.t_status AS 'Status' "
+                 + "FROM transactions t "
+                 + "LEFT JOIN members m ON t.m_id = m.m_id"; 
+
+    cc.displayData(query, transaction_table);
 }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

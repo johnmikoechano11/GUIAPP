@@ -324,6 +324,9 @@ void imageprofile() {
         reports.setBackground(new java.awt.Color(255, 255, 255));
         reports.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         reports.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reportsMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 reportsMouseEntered(evt);
             }
@@ -453,6 +456,21 @@ void imageprofile() {
     private void logoutMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMousePressed
      logout.setBackground(new Color(160,64,0));
     }//GEN-LAST:event_logoutMousePressed
+
+    private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked
+    reports rep = new reports();
+    
+   
+    javax.swing.JDesktopPane maindesktop = getDesktopPane(); 
+    
+    if (maindesktop != null) {
+        maindesktop.removeAll();
+        maindesktop.add(rep);
+        rep.setVisible(true);
+        maindesktop.revalidate();
+        maindesktop.repaint();
+    }
+    }//GEN-LAST:event_reportsMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

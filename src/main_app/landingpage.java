@@ -20,7 +20,7 @@ boolean isHovered = false;
      */
     public landingpage() {
         initComponents();
-        home.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
+       
     }
 
     /**
@@ -34,10 +34,6 @@ boolean isHovered = false;
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        home = new javax.swing.JLabel();
-        serv = new javax.swing.JLabel();
-        con = new javax.swing.JLabel();
-        about = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -99,83 +95,6 @@ boolean isHovered = false;
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("GYM MANAGEMENT SYSTEM");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, -1, 70));
-
-        home.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        home.setForeground(new java.awt.Color(255, 255, 255));
-        home.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        home.setText("Home");
-        home.setMaximumSize(new java.awt.Dimension(41, 70));
-        home.setMinimumSize(new java.awt.Dimension(41, 70));
-        home.setPreferredSize(new java.awt.Dimension(41, 70));
-        home.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                homeMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                homeMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                homeMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                homeMousePressed(evt);
-            }
-        });
-        jPanel1.add(home, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 0, -1, 70));
-
-        serv.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        serv.setForeground(new java.awt.Color(255, 255, 255));
-        serv.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        serv.setText("Services");
-        serv.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                servMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                servMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                servMousePressed(evt);
-            }
-        });
-        jPanel1.add(serv, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, -1, 70));
-
-        con.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        con.setForeground(new java.awt.Color(255, 255, 255));
-        con.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        con.setText("Contact");
-        con.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                conMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                conMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                conMousePressed(evt);
-            }
-        });
-        jPanel1.add(con, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 70, 70));
-
-        about.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        about.setForeground(new java.awt.Color(255, 255, 255));
-        about.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        about.setText("About");
-        about.setMaximumSize(new java.awt.Dimension(41, 70));
-        about.setMinimumSize(new java.awt.Dimension(41, 70));
-        about.setPreferredSize(new java.awt.Dimension(41, 70));
-        about.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                aboutMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                aboutMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                aboutMousePressed(evt);
-            }
-        });
-        jPanel1.add(about, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, 50, 70));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 70));
 
@@ -335,74 +254,6 @@ reg.repaint();
        log.setBackground(new Color(93,120,193));
     }//GEN-LAST:event_logMouseExited
 
-    private void homeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMouseEntered
-
-javax.swing.border.Border line = javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, java.awt.Color.WHITE);
-
-
-javax.swing.border.Border padding = javax.swing.BorderFactory.createEmptyBorder(10, 0, 8, 0);
-
-
-home.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, padding));
-home.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-    }//GEN-LAST:event_homeMouseEntered
-
-    private void homeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMouseExited
-
-home.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
-    }//GEN-LAST:event_homeMouseExited
-
-    private void homeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMousePressed
-
-javax.swing.border.Border line = javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, java.awt.Color.WHITE);
-javax.swing.border.Border gap = javax.swing.BorderFactory.createEmptyBorder(10, 0, 8, 0);
-home.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-home.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, gap));
-    }//GEN-LAST:event_homeMousePressed
-
-    private void servMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_servMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_servMouseEntered
-
-    private void servMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_servMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_servMouseExited
-
-    private void servMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_servMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_servMousePressed
-
-    private void conMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_conMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_conMouseEntered
-
-    private void conMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_conMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_conMouseExited
-
-    private void conMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_conMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_conMousePressed
-
-    private void aboutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_aboutMouseEntered
-
-    private void aboutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_aboutMouseExited
-
-    private void aboutMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_aboutMousePressed
-
-    private void homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeMouseClicked
-      landingpage le = new landingpage();
-      le.setVisible(true);
-      this.dispose();
-    }//GEN-LAST:event_homeMouseClicked
-
     /**
      * @param args the command line arguments
      */
@@ -439,10 +290,7 @@ home.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, gap));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel about;
     private javax.swing.JLabel backcol;
-    private javax.swing.JLabel con;
-    private javax.swing.JLabel home;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -458,6 +306,5 @@ home.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, gap));
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel log;
     private javax.swing.JPanel reg;
-    private javax.swing.JLabel serv;
     // End of variables declaration//GEN-END:variables
 }

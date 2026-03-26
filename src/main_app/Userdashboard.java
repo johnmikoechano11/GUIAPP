@@ -50,7 +50,6 @@ public class Userdashboard extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
-        dashlogout = new javax.swing.JButton();
         maindesktop = new javax.swing.JDesktopPane();
         jPanel5 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -101,7 +100,7 @@ public class Userdashboard extends javax.swing.JFrame {
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/payments.png"))); // NOI18N
         payments.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 40));
 
-        navbar.add(payments, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 200, 40));
+        navbar.add(payments, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 200, 40));
 
         userpane.setBackground(new java.awt.Color(27, 42, 78));
         userpane.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -133,7 +132,7 @@ public class Userdashboard extends javax.swing.JFrame {
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/User.png"))); // NOI18N
         userpane.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, -1));
 
-        navbar.add(userpane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 200, 40));
+        navbar.add(userpane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 200, 40));
 
         dashpane.setBackground(new java.awt.Color(27, 42, 78));
         dashpane.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -164,7 +163,7 @@ public class Userdashboard extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dash.png"))); // NOI18N
         dashpane.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 40));
 
-        navbar.add(dashpane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 200, 40));
+        navbar.add(dashpane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 200, 40));
 
         accounts.setBackground(new java.awt.Color(27, 42, 78));
         accounts.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -208,16 +207,6 @@ public class Userdashboard extends javax.swing.JFrame {
         header.setBackground(new java.awt.Color(74, 90, 150));
         header.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        dashlogout.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        dashlogout.setText("LOG OUT");
-        dashlogout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dashlogoutActionPerformed(evt);
-            }
-        });
-        header.add(dashlogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, 100, 40));
-
         jPanel1.add(header);
         header.setBounds(200, 0, 670, 70);
 
@@ -266,15 +255,6 @@ public class Userdashboard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void dashlogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashlogoutActionPerformed
-        int a = javax.swing.JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Select", javax.swing.JOptionPane.YES_NO_OPTION);
-        if (a == 0) {
-            landingpage lp = new landingpage();
-            lp.setVisible(true);
-            this.dispose();
-        }
-    }//GEN-LAST:event_dashlogoutActionPerformed
 
     private void paymentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paymentsMouseClicked
         Payments_page pm = new Payments_page();
@@ -385,7 +365,6 @@ public class Userdashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel accounts;
-    private javax.swing.JButton dashlogout;
     private javax.swing.JPanel dashpane;
     private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;

@@ -21,7 +21,9 @@ public class dashboard extends javax.swing.JFrame {
      */
     public dashboard() {
         initComponents();
-        
+     workout_plan.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));   
+      exer.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));  
+       trans.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));  
 maindesktop.setUI(new javax.swing.plaf.basic.BasicDesktopPaneUI());
     }
 
@@ -55,6 +57,9 @@ maindesktop.setUI(new javax.swing.plaf.basic.BasicDesktopPaneUI());
         jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
+        workout_plan = new javax.swing.JLabel();
+        trans = new javax.swing.JLabel();
+        exer = new javax.swing.JLabel();
         maindesktop = new javax.swing.JDesktopPane();
         jLabel14 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -155,7 +160,7 @@ maindesktop.setUI(new javax.swing.plaf.basic.BasicDesktopPaneUI());
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Dashboard");
-        dashpane.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 110, -1));
+        dashpane.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 5, 110, 30));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dash.png"))); // NOI18N
@@ -243,6 +248,70 @@ maindesktop.setUI(new javax.swing.plaf.basic.BasicDesktopPaneUI());
         header.setBackground(new java.awt.Color(74, 90, 150));
         header.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        workout_plan.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        workout_plan.setForeground(new java.awt.Color(255, 255, 255));
+        workout_plan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        workout_plan.setText("Workout Plan");
+        workout_plan.setMaximumSize(new java.awt.Dimension(41, 70));
+        workout_plan.setMinimumSize(new java.awt.Dimension(41, 70));
+        workout_plan.setPreferredSize(new java.awt.Dimension(41, 70));
+        workout_plan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                workout_planMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                workout_planMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                workout_planMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                workout_planMousePressed(evt);
+            }
+        });
+        header.add(workout_plan, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 120, 70));
+
+        trans.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        trans.setForeground(new java.awt.Color(255, 255, 255));
+        trans.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        trans.setText("Transactions");
+        trans.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                transMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                transMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                transMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                transMousePressed(evt);
+            }
+        });
+        header.add(trans, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, -1, 70));
+
+        exer.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        exer.setForeground(new java.awt.Color(255, 255, 255));
+        exer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        exer.setText("Exercise");
+        exer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exerMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                exerMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                exerMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                exerMousePressed(evt);
+            }
+        });
+        header.add(exer, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, -1, 70));
+
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 670, 70));
 
         maindesktop.setBackground(new java.awt.Color(255, 255, 255));
@@ -372,6 +441,85 @@ maindesktop.setUI(new javax.swing.plaf.basic.BasicDesktopPaneUI());
        accounts.setBackground(new Color(211,84,0));
     }//GEN-LAST:event_accountsMousePressed
 
+    private void workout_planMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_workout_planMouseClicked
+        workoutPlan_page wp = new workoutPlan_page();
+        maindesktop.add(wp).setVisible(true);
+    }//GEN-LAST:event_workout_planMouseClicked
+
+    private void workout_planMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_workout_planMouseEntered
+
+        javax.swing.border.Border line = javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, java.awt.Color.WHITE);
+
+        javax.swing.border.Border padding = javax.swing.BorderFactory.createEmptyBorder(10, 0, 8, 0);
+
+        workout_plan.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, padding));
+        workout_plan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_workout_planMouseEntered
+
+    private void workout_planMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_workout_planMouseExited
+
+        workout_plan.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
+    }//GEN-LAST:event_workout_planMouseExited
+
+    private void workout_planMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_workout_planMousePressed
+
+        javax.swing.border.Border line = javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, java.awt.Color.WHITE);
+        javax.swing.border.Border gap = javax.swing.BorderFactory.createEmptyBorder(10, 0, 8, 0);
+        workout_plan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        workout_plan.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, gap));
+    }//GEN-LAST:event_workout_planMousePressed
+
+    private void transMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transMousePressed
+      
+        javax.swing.border.Border line = javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, java.awt.Color.WHITE);
+        javax.swing.border.Border gap = javax.swing.BorderFactory.createEmptyBorder(10, 0, 8, 0);
+        trans.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        trans.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, gap));
+    }//GEN-LAST:event_transMousePressed
+
+    private void transMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transMouseExited
+        trans.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
+    }//GEN-LAST:event_transMouseExited
+
+    private void transMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transMouseEntered
+       javax.swing.border.Border line = javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, java.awt.Color.WHITE);
+
+        javax.swing.border.Border padding = javax.swing.BorderFactory.createEmptyBorder(10, 0, 8, 0);
+
+       trans.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, padding));
+       trans.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_transMouseEntered
+
+    private void transMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transMouseClicked
+       Transaction_page tp = new Transaction_page();
+        maindesktop.add(tp).setVisible(true);
+    }//GEN-LAST:event_transMouseClicked
+
+    private void exerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exerMousePressed
+        javax.swing.border.Border line = javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, java.awt.Color.WHITE);
+        javax.swing.border.Border gap = javax.swing.BorderFactory.createEmptyBorder(10, 0, 8, 0);
+        exer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        exer.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, gap));
+    }//GEN-LAST:event_exerMousePressed
+
+    private void exerMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exerMouseExited
+      exer.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
+    }//GEN-LAST:event_exerMouseExited
+
+    private void exerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exerMouseEntered
+          javax.swing.border.Border line = javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, java.awt.Color.WHITE);
+
+        javax.swing.border.Border padding = javax.swing.BorderFactory.createEmptyBorder(10, 0, 8, 0);
+
+       exer.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, padding));
+       exer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_exerMouseEntered
+
+    private void exerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exerMouseClicked
+       exercise_page ep = new exercise_page();
+        maindesktop.add(ep).setVisible(true);
+    }//GEN-LAST:event_exerMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -411,6 +559,7 @@ maindesktop.setUI(new javax.swing.plaf.basic.BasicDesktopPaneUI());
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel accounts;
     private javax.swing.JPanel dashpane;
+    private javax.swing.JLabel exer;
     private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -432,6 +581,8 @@ maindesktop.setUI(new javax.swing.plaf.basic.BasicDesktopPaneUI());
     private javax.swing.JPanel members;
     private javax.swing.JPanel navbar;
     private javax.swing.JPanel payments;
+    private javax.swing.JLabel trans;
     private javax.swing.JPanel userpane;
+    private javax.swing.JLabel workout_plan;
     // End of variables declaration//GEN-END:variables
 }
