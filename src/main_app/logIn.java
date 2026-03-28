@@ -149,6 +149,7 @@ public class logIn extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        close = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -266,6 +267,21 @@ public class logIn extends javax.swing.JFrame {
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/pre_workout.png"))); // NOI18N
         log_panel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 360, 110, 90));
 
+        close.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        close.setForeground(new java.awt.Color(44, 62, 80));
+        close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        close.setText("×");
+        close.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                closeMouseEntered(evt);
+            }
+        });
+        log_panel.add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 70, 50));
+
         getContentPane().add(log_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 370, 440));
 
         pack();
@@ -305,9 +321,9 @@ public class logIn extends javax.swing.JFrame {
         if (status.equalsIgnoreCase("Active")) {
             // Login success
             JOptionPane.showMessageDialog(null, "Login Success!");
-
-            // Set singleton data
             Singleton singletonInstance = Singleton.getInstance();
+             singletonInstance.setLoggedIn(true);
+
             singletonInstance.setId(rs.getInt("u_id"));
             singletonInstance.setFname(rs.getString("u_fname"));
             singletonInstance.setEmail(rs.getString("u_email"));
@@ -376,6 +392,25 @@ public class logIn extends javax.swing.JFrame {
      this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
 
+    private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
+        int response = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to exit the application?",
+            "Exit Confirmation",
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (response == javax.swing.JOptionPane.YES_OPTION) {
+
+            System.exit(0);
+        }
+    }//GEN-LAST:event_closeMouseClicked
+
+    private void closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseEntered
+
+    }//GEN-LAST:event_closeMouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -412,6 +447,7 @@ public class logIn extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel close;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

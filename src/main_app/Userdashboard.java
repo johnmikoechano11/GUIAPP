@@ -9,6 +9,7 @@ package main_app;
     import internalPages.*;
     import internalPages.dashBoardPage;
     import config.Session;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Angie
@@ -19,7 +20,15 @@ public class Userdashboard extends javax.swing.JFrame {
      * Creates new form Userdashboard
      */
     public Userdashboard() {
+          if (!config.Singleton.getInstance().isLoggedIn()) {
+        JOptionPane.showMessageDialog(null, "Please Login First!");
+        new logIn().setVisible(true);
+        this.dispose();
+        return; 
+    }
         initComponents();
+        
+        maindesktop.setUI(new javax.swing.plaf.basic.BasicDesktopPaneUI());
     }
     Color navcolor = new Color (102,102,102);
      Color headcolor = new Color (51,51,51);
@@ -40,17 +49,23 @@ public class Userdashboard extends javax.swing.JFrame {
         payments = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        userpane = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         dashpane = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         accounts = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        members = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
+        close = new javax.swing.JLabel();
+        minimize = new javax.swing.JLabel();
+        workout_plan = new javax.swing.JLabel();
+        exer = new javax.swing.JLabel();
+        trans = new javax.swing.JLabel();
         maindesktop = new javax.swing.JDesktopPane();
+        jLabel14 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
 
@@ -101,38 +116,6 @@ public class Userdashboard extends javax.swing.JFrame {
         payments.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 40));
 
         navbar.add(payments, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 200, 40));
-
-        userpane.setBackground(new java.awt.Color(27, 42, 78));
-        userpane.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        userpane.setForeground(new java.awt.Color(255, 255, 255));
-        userpane.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        userpane.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                userpaneMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                userpaneMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                userpaneMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                userpaneMousePressed(evt);
-            }
-        });
-        userpane.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("User");
-        userpane.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 5, 70, 30));
-
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/User.png"))); // NOI18N
-        userpane.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, -1));
-
-        navbar.add(userpane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 200, 40));
 
         dashpane.setBackground(new java.awt.Color(27, 42, 78));
         dashpane.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -201,12 +184,133 @@ public class Userdashboard extends javax.swing.JFrame {
 
         navbar.add(accounts, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 200, 40));
 
+        members.setBackground(new java.awt.Color(27, 42, 78));
+        members.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        members.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        members.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                membersMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                membersMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                membersMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                membersMousePressed(evt);
+            }
+        });
+        members.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Members");
+        members.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 5, 80, 30));
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/members (2).png"))); // NOI18N
+        members.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 70, -1));
+
+        navbar.add(members, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 200, 40));
+
         jPanel1.add(navbar);
         navbar.setBounds(0, 0, 200, 510);
 
         header.setBackground(new java.awt.Color(74, 90, 150));
         header.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        close.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        close.setForeground(new java.awt.Color(255, 255, 255));
+        close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        close.setText("×");
+        close.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                closeMouseEntered(evt);
+            }
+        });
+        header.add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 0, 60, 60));
+
+        minimize.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        minimize.setForeground(new java.awt.Color(255, 255, 255));
+        minimize.setText("–");
+        minimize.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        minimize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeMouseClicked(evt);
+            }
+        });
+        header.add(minimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 30, 60));
+
+        workout_plan.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        workout_plan.setForeground(new java.awt.Color(255, 255, 255));
+        workout_plan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        workout_plan.setText("Workout Plan");
+        workout_plan.setMaximumSize(new java.awt.Dimension(41, 70));
+        workout_plan.setMinimumSize(new java.awt.Dimension(41, 70));
+        workout_plan.setPreferredSize(new java.awt.Dimension(41, 70));
+        workout_plan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                workout_planMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                workout_planMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                workout_planMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                workout_planMousePressed(evt);
+            }
+        });
+        header.add(workout_plan, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 120, 70));
+
+        exer.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        exer.setForeground(new java.awt.Color(255, 255, 255));
+        exer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        exer.setText("Exercise");
+        exer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exerMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                exerMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                exerMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                exerMousePressed(evt);
+            }
+        });
+        header.add(exer, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, -1, 70));
+
+        trans.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        trans.setForeground(new java.awt.Color(255, 255, 255));
+        trans.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        trans.setText("Transactions");
+        trans.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                transMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                transMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                transMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                transMousePressed(evt);
+            }
+        });
+        header.add(trans, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, -1, 70));
+
         jPanel1.add(header);
         header.setBounds(200, 0, 670, 70);
 
@@ -214,15 +318,29 @@ public class Userdashboard extends javax.swing.JFrame {
         maindesktop.setAutoscrolls(true);
         maindesktop.setPreferredSize(new java.awt.Dimension(760, 420));
 
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/gym_background.png"))); // NOI18N
+
+        maindesktop.setLayer(jLabel14, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout maindesktopLayout = new javax.swing.GroupLayout(maindesktop);
         maindesktop.setLayout(maindesktopLayout);
         maindesktopLayout.setHorizontalGroup(
             maindesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 670, Short.MAX_VALUE)
+            .addGroup(maindesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(maindesktopLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel14)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         maindesktopLayout.setVerticalGroup(
             maindesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 390, Short.MAX_VALUE)
+            .addGroup(maindesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(maindesktopLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel14)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         jPanel1.add(maindesktop);
@@ -273,23 +391,6 @@ public class Userdashboard extends javax.swing.JFrame {
         payments.setBackground(new Color(211,84,0));
     }//GEN-LAST:event_paymentsMousePressed
 
-    private void userpaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpaneMouseClicked
-        manageUser ur = new manageUser();
-        maindesktop.add(ur).setVisible(true);
-    }//GEN-LAST:event_userpaneMouseClicked
-
-    private void userpaneMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpaneMouseEntered
-        userpane.setBackground(new Color(243,156,18));
-    }//GEN-LAST:event_userpaneMouseEntered
-
-    private void userpaneMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpaneMouseExited
-        userpane.setBackground(new Color(27,42,78));
-    }//GEN-LAST:event_userpaneMouseExited
-
-    private void userpaneMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userpaneMousePressed
-        userpane.setBackground(new Color(211,84,0));
-    }//GEN-LAST:event_userpaneMousePressed
-
     private void dashpaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashpaneMouseClicked
         dashBoardPage dbp = new dashBoardPage();
         maindesktop.add(dbp).setVisible(true);
@@ -328,6 +429,125 @@ public class Userdashboard extends javax.swing.JFrame {
         accounts.setBackground(new Color(211,84,0));
     }//GEN-LAST:event_accountsMousePressed
 
+    private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
+        int response = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to exit the application?",
+            "Exit Confirmation",
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (response == javax.swing.JOptionPane.YES_OPTION) {
+
+            System.exit(0);
+        }
+    }//GEN-LAST:event_closeMouseClicked
+
+    private void closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseEntered
+
+    }//GEN-LAST:event_closeMouseEntered
+
+    private void minimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeMouseClicked
+        this.setState(javax.swing.JFrame.ICONIFIED);
+    }//GEN-LAST:event_minimizeMouseClicked
+
+    private void workout_planMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_workout_planMouseClicked
+        workoutPlan_page wp = new workoutPlan_page();
+        maindesktop.add(wp).setVisible(true);
+    }//GEN-LAST:event_workout_planMouseClicked
+
+    private void workout_planMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_workout_planMouseEntered
+
+        javax.swing.border.Border line = javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, java.awt.Color.WHITE);
+
+        javax.swing.border.Border padding = javax.swing.BorderFactory.createEmptyBorder(10, 0, 8, 0);
+
+        workout_plan.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, padding));
+        workout_plan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_workout_planMouseEntered
+
+    private void workout_planMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_workout_planMouseExited
+
+        workout_plan.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
+    }//GEN-LAST:event_workout_planMouseExited
+
+    private void workout_planMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_workout_planMousePressed
+
+        javax.swing.border.Border line = javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, java.awt.Color.WHITE);
+        javax.swing.border.Border gap = javax.swing.BorderFactory.createEmptyBorder(10, 0, 8, 0);
+        workout_plan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        workout_plan.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, gap));
+    }//GEN-LAST:event_workout_planMousePressed
+
+    private void exerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exerMouseClicked
+        exercise_page ep = new exercise_page();
+        maindesktop.add(ep).setVisible(true);
+    }//GEN-LAST:event_exerMouseClicked
+
+    private void exerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exerMouseEntered
+        javax.swing.border.Border line = javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, java.awt.Color.WHITE);
+
+        javax.swing.border.Border padding = javax.swing.BorderFactory.createEmptyBorder(10, 0, 8, 0);
+
+        exer.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, padding));
+        exer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_exerMouseEntered
+
+    private void exerMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exerMouseExited
+        exer.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
+    }//GEN-LAST:event_exerMouseExited
+
+    private void exerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exerMousePressed
+        javax.swing.border.Border line = javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, java.awt.Color.WHITE);
+        javax.swing.border.Border gap = javax.swing.BorderFactory.createEmptyBorder(10, 0, 8, 0);
+        exer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        exer.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, gap));
+    }//GEN-LAST:event_exerMousePressed
+
+    private void transMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transMouseClicked
+        Transaction_page tp = new Transaction_page();
+        maindesktop.add(tp).setVisible(true);
+    }//GEN-LAST:event_transMouseClicked
+
+    private void transMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transMouseEntered
+        javax.swing.border.Border line = javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, java.awt.Color.WHITE);
+
+        javax.swing.border.Border padding = javax.swing.BorderFactory.createEmptyBorder(10, 0, 8, 0);
+
+        trans.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, padding));
+        trans.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_transMouseEntered
+
+    private void transMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transMouseExited
+        trans.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));
+    }//GEN-LAST:event_transMouseExited
+
+    private void transMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transMousePressed
+
+        javax.swing.border.Border line = javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, java.awt.Color.WHITE);
+        javax.swing.border.Border gap = javax.swing.BorderFactory.createEmptyBorder(10, 0, 8, 0);
+        trans.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        trans.setBorder(javax.swing.BorderFactory.createCompoundBorder(line, gap));
+    }//GEN-LAST:event_transMousePressed
+
+    private void membersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_membersMouseClicked
+        member mr = new member();
+        maindesktop.add(mr).setVisible(true);
+    }//GEN-LAST:event_membersMouseClicked
+
+    private void membersMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_membersMouseEntered
+        members.setBackground(new Color(243,156,18));
+    }//GEN-LAST:event_membersMouseEntered
+
+    private void membersMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_membersMouseExited
+        members.setBackground(new Color(27,42,78));
+    }//GEN-LAST:event_membersMouseExited
+
+    private void membersMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_membersMousePressed
+        members.setBackground(new Color(211,84,0));
+    }//GEN-LAST:event_membersMousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -365,24 +585,30 @@ public class Userdashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel accounts;
+    private javax.swing.JLabel close;
     private javax.swing.JPanel dashpane;
+    private javax.swing.JLabel exer;
     private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     public javax.swing.JDesktopPane maindesktop;
+    private javax.swing.JPanel members;
+    private javax.swing.JLabel minimize;
     private javax.swing.JPanel navbar;
     private javax.swing.JPanel payments;
-    private javax.swing.JPanel userpane;
+    private javax.swing.JLabel trans;
+    private javax.swing.JLabel workout_plan;
     // End of variables declaration//GEN-END:variables
 }

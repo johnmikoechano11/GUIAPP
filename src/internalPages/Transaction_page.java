@@ -105,12 +105,14 @@ jScrollPane1.getViewport().setBackground(Color.WHITE);
 
 public void displayData() {
     config.configclass cc = new config.configclass();
-    
 
+    // Added t.r_id and t.t_method to match your Edit logic
     String query = "SELECT "
                  + "t.t_id AS 'Transaction ID', "
                  + "m.m_fname AS 'Member Name', " 
+                 + "t.r_id AS 'Payment ID', "
                  + "t.t_amount AS 'Amount', "
+                 + "t.t_method AS 'Method', "
                  + "t.t_date AS 'Date', "
                  + "t.t_status AS 'Status' "
                  + "FROM transactions t "
@@ -118,12 +120,81 @@ public void displayData() {
 
     cc.displayData(query, transaction_table);
 }
+
+public void printReceipt(String id, String member, String amount, String date, String status) {
+    java.awt.print.PrinterJob job = java.awt.print.PrinterJob.getPrinterJob();
+    job.setJobName("Print Receipt");
+
+    job.setPrintable(new java.awt.print.Printable() {
+        @Override
+        public int print(java.awt.Graphics graphics, java.awt.print.PageFormat pageFormat, int pageIndex) {
+            if (pageIndex > 0) return java.awt.print.Printable.NO_SUCH_PAGE;
+
+            java.awt.Graphics2D g2 = (java.awt.Graphics2D) graphics;
+            g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+
+            int y = 20;
+            g2.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18));
+            g2.drawString("GYM MANAGEMENT SYSTEM", 50, y); y += 30;
+            g2.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 10)); // Monospaced for alignment
+            g2.drawString("------------------------------------------", 50, y); y += 20;
+            g2.drawString(String.format("%-15s: %s", "Ref ID", id), 50, y); y += 20;
+            g2.drawString(String.format("%-15s: %s", "Member", member), 50, y); y += 20;
+            g2.drawString(String.format("%-15s: %s", "Date", date), 50, y); y += 20;
+            g2.drawString("------------------------------------------", 50, y); y += 25;
+            g2.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+            g2.drawString("TOTAL AMOUNT:  PHP " + amount, 50, y); y += 35;
+
+            g2.setFont(new java.awt.Font("Segoe UI", java.awt.Font.ITALIC, 10));
+            g2.drawString("Thank you for your payment!", 50, y);
+
+            return java.awt.print.Printable.PAGE_EXISTS;
+        }
+    });
+
+    if (job.printDialog()) {
+        try {
+            job.print();
+        } catch (java.awt.print.PrinterException ex) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Printer Error: " + ex.getMessage());
+        }
+    }
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         header = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        printBtn = Add = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
+                int shadowSize = 5;
+                int borderRadius = 10;
+                int width = getWidth() - shadowSize * 2;
+                int height = getHeight() - shadowSize * 2;
+
+                // 1. Draw the Shadow
+                for (int i = 0; i < shadowSize; i++) {
+                    // Gradually fade the black color to create a soft blur
+                    g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); 
+                    g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);
+                }
+
+                // 2. Fill the Main Panel (White Card)
+                g2.setColor(getBackground()); // Uses the color from the Design tab
+                g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);
+
+                g2.dispose();
+            }
+        };
+        // This makes the area outside the rounded card transparent
+        Add.setOpaque(false);
+        ;
+        search5 = new javax.swing.JLabel();
         body = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         transaction_table = new javax.swing.JTable();
@@ -262,6 +333,33 @@ public void displayData() {
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         header.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 60));
 
+        printBtn.setBackground(new java.awt.Color(93, 120, 193));
+        printBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        printBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                printBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                printBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                printBtnMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                printBtnMousePressed(evt);
+            }
+        });
+        printBtn.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        search5.setBackground(new java.awt.Color(51, 51, 51));
+        search5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        search5.setForeground(new java.awt.Color(255, 255, 255));
+        search5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        search5.setText("PRINT RECEIPT");
+        printBtn.add(search5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 100, 30));
+
+        header.add(printBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 6, 140, 50));
+
         getContentPane().add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 60));
 
         body.setBackground(new java.awt.Color(244, 247, 246));
@@ -283,7 +381,6 @@ public void displayData() {
         nav_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         search3.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        search3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         search3.setBorder(null);
         search3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -343,6 +440,7 @@ public void displayData() {
         nav_panel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 30, 40));
 
         Add.setBackground(new java.awt.Color(243, 156, 18));
+        Add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Add.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AddMouseClicked(evt);
@@ -373,6 +471,7 @@ public void displayData() {
         nav_panel.add(Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, 120, 50));
 
         Edit.setBackground(new java.awt.Color(41, 128, 185));
+        Edit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Edit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 EditMouseClicked(evt);
@@ -403,6 +502,7 @@ public void displayData() {
         nav_panel.add(Edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 16, 120, -1));
 
         delete.setBackground(new java.awt.Color(192, 57, 43));
+        delete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         delete.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 deleteMouseClicked(evt);
@@ -448,15 +548,25 @@ public void displayData() {
     }//GEN-LAST:event_search3ActionPerformed
 
     private void searchUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchUserMouseClicked
-        config.configclass conf = new config.configclass();
-        String txt = search3.getText();
+config.configclass conf = new config.configclass();
+    String txt = search3.getText();
 
-      String query = "SELECT t_id as 'ID', m_id as 'Member ID', r_id as 'Payment ID', "
-    + "t_amount as 'Amount', t_method as 'Method', "
-    + "t_date as 'Date', t_status as 'Status' FROM transactions "
-    + "WHERE UPPER(t_method) LIKE UPPER('%" + txt + "%') "
-    + "OR UPPER(t_status) LIKE UPPER('%" + txt + "%')";
-        conf.displayData(query, transaction_table);
+    String query = "SELECT "
+                 + "t.t_id AS 'Transaction ID', "
+                 + "m.m_fname AS 'Member Name', " 
+                 + "t.r_id AS 'Payment ID', "
+                 + "t.t_amount AS 'Amount', "
+                 + "t.t_method AS 'Method', "
+                 + "t.t_date AS 'Date', "
+                 + "t.t_status AS 'Status' "
+                 + "FROM transactions t "
+                 + "LEFT JOIN members m ON t.m_id = m.m_id "
+                 + "WHERE UPPER(m.m_fname) LIKE UPPER('%" + txt + "%') " 
+                 + "OR UPPER(t.t_status) LIKE UPPER('%" + txt + "%') "   
+                 + "OR UPPER(t.t_method) LIKE UPPER('%" + txt + "%') "  
+                 + "OR CAST(t.t_id AS CHAR) LIKE '%" + txt + "%'";    
+
+    conf.displayData(query, transaction_table);
     }//GEN-LAST:event_searchUserMouseClicked
 
     private void searchUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchUserMouseEntered
@@ -589,6 +699,37 @@ public void displayData() {
         delete.setBackground(new Color(146, 43, 33));
     }//GEN-LAST:event_deleteMousePressed
 
+    private void printBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printBtnMouseClicked
+     int rowIndex = transaction_table.getSelectedRow();
+    
+    if (rowIndex < 0) {
+        javax.swing.JOptionPane.showMessageDialog(null, "Please select a transaction to print!");
+    } else {
+        javax.swing.table.TableModel model = transaction_table.getModel();
+        
+        // Match these indexes to your displayData() columns
+        String id = model.getValueAt(rowIndex, 0).toString();
+        String member = model.getValueAt(rowIndex, 1).toString();
+        String amount = model.getValueAt(rowIndex, 2).toString();
+        String date = model.getValueAt(rowIndex, 3).toString();
+        String status = model.getValueAt(rowIndex, 4).toString();
+        
+        printReceipt(id, member, amount, date, status);
+    }
+    }//GEN-LAST:event_printBtnMouseClicked
+
+    private void printBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printBtnMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_printBtnMouseEntered
+
+    private void printBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printBtnMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_printBtnMouseExited
+
+    private void printBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printBtnMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_printBtnMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Add;
@@ -603,12 +744,14 @@ public void displayData() {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel nav_panel;
+    private javax.swing.JPanel printBtn;
     private javax.swing.JPanel refresh;
     private javax.swing.JLabel search;
     private javax.swing.JLabel search1;
     private javax.swing.JLabel search2;
     private javax.swing.JTextField search3;
     private javax.swing.JLabel search4;
+    private javax.swing.JLabel search5;
     private javax.swing.JPanel searchUser;
     private javax.swing.JTable transaction_table;
     // End of variables declaration//GEN-END:variables

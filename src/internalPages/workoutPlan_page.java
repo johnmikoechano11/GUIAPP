@@ -282,7 +282,6 @@ jScrollPane1.getViewport().setBackground(Color.WHITE);
         nav_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         search3.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        search3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         search3.setBorder(null);
         search3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -342,6 +341,7 @@ jScrollPane1.getViewport().setBackground(Color.WHITE);
         nav_panel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 30, 40));
 
         Add.setBackground(new java.awt.Color(243, 156, 18));
+        Add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Add.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AddMouseClicked(evt);
@@ -372,6 +372,7 @@ jScrollPane1.getViewport().setBackground(Color.WHITE);
         nav_panel.add(Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, 120, 50));
 
         Edit.setBackground(new java.awt.Color(41, 128, 185));
+        Edit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Edit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 EditMouseClicked(evt);
@@ -402,6 +403,7 @@ jScrollPane1.getViewport().setBackground(Color.WHITE);
         nav_panel.add(Edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 16, 120, -1));
 
         delete.setBackground(new java.awt.Color(192, 57, 43));
+        delete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         delete.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 deleteMouseClicked(evt);
@@ -521,7 +523,7 @@ jScrollPane1.getViewport().setBackground(Color.WHITE);
 
    
         stf.planId.setText("" + model.getValueAt(rowIndex, 0));
-        stf.p_name.setText("" + model.getValueAt(rowIndex, 1));
+        stf.p_name.setSelectedItem("" + model.getValueAt(rowIndex, 1).toString());
         stf.week_dura.setSelectedItem(model.getValueAt(rowIndex, 2).toString());
         stf.Goal.setSelectedItem(model.getValueAt(rowIndex, 3).toString());
         stf.Intensity.setSelectedItem(model.getValueAt(rowIndex, 4).toString());

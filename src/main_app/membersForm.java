@@ -27,6 +27,12 @@ public class membersForm extends javax.swing.JFrame {
      * Creates new form memberForm
      */
     public membersForm() {
+          if (!config.Singleton.getInstance().isLoggedIn()) {
+        JOptionPane.showMessageDialog(null, "Please Login First!");
+        new logIn().setVisible(true);
+        this.dispose();
+        return; 
+    }
         initComponents();
             m_dura.setModel(new javax.swing.SpinnerNumberModel(1, 1, 36, 1));
     m_type.addActionListener(e -> updateMembershipDates());
@@ -101,9 +107,7 @@ public void updateMembershipDates() {
         memberform = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        wrong = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        close2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         update = new javax.swing.JPanel();
         firstname = new javax.swing.JLabel();
@@ -172,36 +176,20 @@ public void updateMembershipDates() {
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 220, 20));
 
-        jPanel5.setBackground(new java.awt.Color(102, 102, 102));
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
-        );
-
-        jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, -1, 40));
-
-        wrong.setBackground(new java.awt.Color(27, 42, 78));
-        wrong.addMouseListener(new java.awt.event.MouseAdapter() {
+        close2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        close2.setForeground(new java.awt.Color(255, 255, 255));
+        close2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        close2.setText("×");
+        close2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        close2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                wrongMouseClicked(evt);
+                close2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                close2MouseEntered(evt);
             }
         });
-        wrong.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("×");
-        wrong.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 30, 50));
-
-        jPanel4.add(wrong, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 0, 70, 60));
+        jPanel4.add(close2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 0, 70, 50));
 
         memberform.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 60));
 
@@ -397,34 +385,6 @@ public void updateMembershipDates() {
         // TODO add your handling code here:
     }//GEN-LAST:event_m_contActionPerformed
 
-    private void wrongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wrongMouseClicked
-   // 1. Close this popup form
-    this.dispose();
-
-    // 2. Find the dashboard window you are already in
-    javax.swing.JFrame topFrame = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
-    
-    try {
-        // 3. Access the blue area (maindesktop)
-        java.lang.reflect.Field field = topFrame.getClass().getDeclaredField("maindesktop");
-        field.setAccessible(true);
-        javax.swing.JDesktopPane desktop = (javax.swing.JDesktopPane) field.get(topFrame);
-        
-        // 4. Clear the screen and load the MEMBERS table
-        desktop.removeAll();
-        member m = new member(); // This loads your table page
-        desktop.add(m).setVisible(true);
-        
-        // 5. Refresh the screen
-        desktop.revalidate();
-        desktop.repaint();
-        
-    } catch (Exception e) {
-  
-        System.out.println("Error returning to Members: " + e.getMessage());
-    }
-    }//GEN-LAST:event_wrongMouseClicked
-
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
    if(validateRegister() != 1) return;
 
@@ -519,6 +479,25 @@ public void updateMembershipDates() {
         add.setBackground(new Color(211, 84, 0));
     }//GEN-LAST:event_addMousePressed
 
+    private void close2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close2MouseClicked
+        int response = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to exit the application?",
+            "Exit Confirmation",
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (response == javax.swing.JOptionPane.YES_OPTION) {
+
+            close();
+        }
+    }//GEN-LAST:event_close2MouseClicked
+
+    private void close2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close2MouseEntered
+
+    }//GEN-LAST:event_close2MouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -557,6 +536,7 @@ public void updateMembershipDates() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JPanel add;
+    private javax.swing.JLabel close2;
     private javax.swing.JLabel firstname;
     private javax.swing.JLabel firstname1;
     private javax.swing.JLabel firstname2;
@@ -567,11 +547,9 @@ public void updateMembershipDates() {
     private javax.swing.JLabel firstname7;
     private javax.swing.JLabel firstname8;
     public javax.swing.JComboBox<String> gender;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     public javax.swing.JTextField m_cont;
     public javax.swing.JSpinner m_dura;
     public javax.swing.JLabel m_expiry;
@@ -583,6 +561,5 @@ public void updateMembershipDates() {
     public javax.swing.JLabel st_label;
     public javax.swing.JComboBox<String> status;
     private javax.swing.JPanel update;
-    private javax.swing.JPanel wrong;
     // End of variables declaration//GEN-END:variables
 }

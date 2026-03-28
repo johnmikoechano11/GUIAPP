@@ -19,6 +19,7 @@ boolean isHovered = false;
      * Creates new form landingpage
      */
     public landingpage() {
+
         initComponents();
        
     }
@@ -34,6 +35,8 @@ boolean isHovered = false;
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        close = new javax.swing.JLabel();
+        minimize = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -84,6 +87,7 @@ boolean isHovered = false;
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(248, 249, 250));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(74, 90, 150));
@@ -93,8 +97,34 @@ boolean isHovered = false;
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("GYM MANAGEMENT SYSTEM");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, -1, 70));
+        jLabel1.setText("MUSCLE FITNESS");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 210, 70));
+
+        close.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        close.setForeground(new java.awt.Color(255, 255, 255));
+        close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        close.setText("×");
+        close.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                closeMouseEntered(evt);
+            }
+        });
+        jPanel1.add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 0, 50, 60));
+
+        minimize.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        minimize.setForeground(new java.awt.Color(255, 255, 255));
+        minimize.setText("–");
+        minimize.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        minimize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeMouseClicked(evt);
+            }
+        });
+        jPanel1.add(minimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 0, 20, 60));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 70));
 
@@ -104,7 +134,7 @@ boolean isHovered = false;
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 32)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Gym Management System");
+        jLabel2.setText("MUSCLE FITNESS");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 40, 390, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
@@ -254,6 +284,30 @@ reg.repaint();
        log.setBackground(new Color(93,120,193));
     }//GEN-LAST:event_logMouseExited
 
+    private void minimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeMouseClicked
+      this.setState(javax.swing.JFrame.ICONIFIED);
+    }//GEN-LAST:event_minimizeMouseClicked
+
+    private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
+      int response = javax.swing.JOptionPane.showConfirmDialog(
+            this, 
+            "Are you sure you want to exit the application?", 
+            "Exit Confirmation", 
+            javax.swing.JOptionPane.YES_NO_OPTION, 
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+    );
+
+
+    if (response == javax.swing.JOptionPane.YES_OPTION) {
+      
+        System.exit(0);
+    }
+    }//GEN-LAST:event_closeMouseClicked
+
+    private void closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseEntered
+
+    }//GEN-LAST:event_closeMouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -291,6 +345,7 @@ reg.repaint();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backcol;
+    private javax.swing.JLabel close;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -305,6 +360,7 @@ reg.repaint();
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel log;
+    private javax.swing.JLabel minimize;
     private javax.swing.JPanel reg;
     // End of variables declaration//GEN-END:variables
 }

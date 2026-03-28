@@ -6,6 +6,8 @@
 package main_app;
 
 import config.configclass;
+import internalPages.member;
+import internalPages.workoutPlan_page;
 import java.awt.Color;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -20,6 +22,12 @@ public class workoutForm extends javax.swing.JFrame {
      * Creates new form workoutForm
      */
     public workoutForm() {
+           if (!config.Singleton.getInstance().isLoggedIn()) {
+        JOptionPane.showMessageDialog(null, "Please Login First!");
+        new logIn().setVisible(true);
+        this.dispose();
+        return; 
+    }
         initComponents();
         fillMemberCombo();
     }
@@ -39,13 +47,21 @@ public class workoutForm extends javax.swing.JFrame {
 }
     
     private int validateForm() {
-    if (p_name.getText().trim().isEmpty() || Trainer.getText().trim().isEmpty()) {
+    if (p_name.getSelectedItem().toString().isEmpty() || Trainer.getText().trim().isEmpty()) {
         JOptionPane.showMessageDialog(null, "All fields are required!");
         return 0;
     }
     return 1;
 }
        public String action; 
+       
+        public void close(){
+        this.dispose();
+        dashboard dash = new dashboard();
+        dash.setVisible(true);
+        workoutPlan_page up = new workoutPlan_page();
+        dash.maindesktop.add(up).setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,7 +75,7 @@ public class workoutForm extends javax.swing.JFrame {
         firstname = new javax.swing.JLabel();
         Trainer = new javax.swing.JTextField();
         firstname1 = new javax.swing.JLabel();
-        Goal = new javax.swing.JComboBox<>();
+        p_name = new javax.swing.JComboBox<>();
         firstname2 = new javax.swing.JLabel();
         add = add = new javax.swing.JPanel() {
             @Override
@@ -92,7 +108,6 @@ public class workoutForm extends javax.swing.JFrame {
         ;
         st_label = new javax.swing.JLabel();
         firstname5 = new javax.swing.JLabel();
-        p_name = new javax.swing.JTextField();
         firstname6 = new javax.swing.JLabel();
         week_dura = new javax.swing.JComboBox<>();
         firstname7 = new javax.swing.JLabel();
@@ -101,11 +116,11 @@ public class workoutForm extends javax.swing.JFrame {
         m_id = new javax.swing.JComboBox<>();
         status = new javax.swing.JComboBox<>();
         planId = new javax.swing.JLabel();
+        Goal = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        wrong = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        close = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -134,15 +149,15 @@ public class workoutForm extends javax.swing.JFrame {
         firstname1.setText("Member Id:");
         jPanel3.add(firstname1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 90, 30));
 
-        Goal.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        Goal.setForeground(new java.awt.Color(27, 42, 78));
-        Goal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Weight Loss", "Muscle Gain" }));
-        Goal.addActionListener(new java.awt.event.ActionListener() {
+        p_name.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        p_name.setForeground(new java.awt.Color(27, 42, 78));
+        p_name.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Weight Loss", "Muscle Gain", "Cardio Blast", "Strength" }));
+        p_name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GoalActionPerformed(evt);
+                p_nameActionPerformed(evt);
             }
         });
-        jPanel3.add(Goal, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 130, -1));
+        jPanel3.add(p_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 130, -1));
 
         firstname2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         firstname2.setForeground(new java.awt.Color(27, 42, 78));
@@ -173,25 +188,15 @@ public class workoutForm extends javax.swing.JFrame {
         st_label.setForeground(new java.awt.Color(255, 255, 255));
         st_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         st_label.setText("Label");
-        add.add(st_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 50, 50));
+        add.add(st_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 130, 50));
 
-        jPanel3.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 280, 170, 50));
+        jPanel3.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, 190, 50));
 
         firstname5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         firstname5.setForeground(new java.awt.Color(27, 42, 78));
         firstname5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         firstname5.setText("Plan Name:");
         jPanel3.add(firstname5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 90, 30));
-
-        p_name.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        p_name.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(209, 213, 216), java.awt.Color.darkGray, null, null));
-        p_name.setOpaque(false);
-        p_name.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                p_nameActionPerformed(evt);
-            }
-        });
-        jPanel3.add(p_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 200, 30));
 
         firstname6.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         firstname6.setForeground(new java.awt.Color(27, 42, 78));
@@ -212,7 +217,7 @@ public class workoutForm extends javax.swing.JFrame {
 
         Intensity.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         Intensity.setForeground(new java.awt.Color(27, 42, 78));
-        Intensity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Beginner", "Intermediate", "Advanced" }));
+        Intensity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Low. Medium", "High", "Extreme" }));
         jPanel3.add(Intensity, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, -1, -1));
 
         firstname8.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -229,6 +234,16 @@ public class workoutForm extends javax.swing.JFrame {
         status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Completed", "Paused" }));
         jPanel3.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, -1, -1));
         jPanel3.add(planId, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 120, 30));
+
+        Goal.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        Goal.setForeground(new java.awt.Color(27, 42, 78));
+        Goal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lose 5kg", "Bulk Up", "Endurance", "Max Bench" }));
+        Goal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GoalActionPerformed(evt);
+            }
+        });
+        jPanel3.add(Goal, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 130, -1));
 
         jPanel4.setBackground(new java.awt.Color(27, 42, 78));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -255,21 +270,20 @@ public class workoutForm extends javax.swing.JFrame {
 
         jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, -1, 40));
 
-        wrong.setBackground(new java.awt.Color(27, 42, 78));
-        wrong.addMouseListener(new java.awt.event.MouseAdapter() {
+        close.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        close.setForeground(new java.awt.Color(255, 255, 255));
+        close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        close.setText("×");
+        close.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        close.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                wrongMouseClicked(evt);
+                closeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                closeMouseEntered(evt);
             }
         });
-        wrong.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("×");
-        wrong.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 30, 50));
-
-        jPanel4.add(wrong, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 0, 70, 60));
+        jPanel4.add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, 80, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -279,21 +293,20 @@ public class workoutForm extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 440, Short.MAX_VALUE)
+            .addGap(0, 455, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, 0)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 1, Short.MAX_VALUE)))
         );
 
         pack();
@@ -304,9 +317,9 @@ public class workoutForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TrainerActionPerformed
 
-    private void GoalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoalActionPerformed
+    private void p_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_nameActionPerformed
 
-    }//GEN-LAST:event_GoalActionPerformed
+    }//GEN-LAST:event_p_nameActionPerformed
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
   if(validateForm() != 1) return;
@@ -315,7 +328,7 @@ public class workoutForm extends javax.swing.JFrame {
     String selectedMember = m_id.getSelectedItem().toString();
     String memberId = selectedMember.split(" ")[0]; 
 
-    String planName = p_name.getText().trim();
+    String planName = p_name.getSelectedItem().toString();
     String duration = week_dura.getSelectedItem().toString();
     String goal = Goal.getSelectedItem().toString();
     String intensity = Intensity.getSelectedItem().toString();
@@ -324,17 +337,17 @@ public class workoutForm extends javax.swing.JFrame {
 
     configclass dbc = new configclass();
 
-    if(st_label.getText().equals("Add")) {
+    if(action.equals("Add")) {
         String sql = "INSERT INTO workout_plans (m_id, plan_name, duration, goal, intensity, trainer, status) "
                    + "VALUES ('" + memberId + "', '" + planName + "', '" + duration + "', '" 
                    + goal + "', '" + intensity + "', '" + trainerName + "', '" + currentStatus + "')";
 
         if(dbc.insertData(sql) == 1){
             JOptionPane.showMessageDialog(null, "Workout Plan Added Successfully!");
-            this.dispose();
+            close();
         }
 
-    } else if(st_label.getText().equals("Update")) {
+    } else if(action.equals("Update")) {
       
         String sql = "UPDATE workout_plans SET "
                    + "m_id = '" + memberId + "', "
@@ -348,7 +361,7 @@ public class workoutForm extends javax.swing.JFrame {
 
         dbc.updateData(sql);
         JOptionPane.showMessageDialog(null, "Updated Successfully!");
-        this.dispose();
+        close();
     }
     }//GEN-LAST:event_addMouseClicked
 
@@ -364,14 +377,28 @@ public class workoutForm extends javax.swing.JFrame {
         add.setBackground(new Color(211, 84, 0));
     }//GEN-LAST:event_addMousePressed
 
-    private void p_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_nameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_p_nameActionPerformed
+    private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
+        int response = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to exit the application?",
+            "Exit Confirmation",
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
 
-    private void wrongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wrongMouseClicked
-        // 1. Close this popup form
-     
-    }//GEN-LAST:event_wrongMouseClicked
+        if (response == javax.swing.JOptionPane.YES_OPTION) {
+
+            close();
+        }
+    }//GEN-LAST:event_closeMouseClicked
+
+    private void closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseEntered
+
+    }//GEN-LAST:event_closeMouseEntered
+
+    private void GoalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_GoalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -413,6 +440,7 @@ public class workoutForm extends javax.swing.JFrame {
     public javax.swing.JComboBox<String> Intensity;
     public javax.swing.JTextField Trainer;
     public javax.swing.JPanel add;
+    private javax.swing.JLabel close;
     private javax.swing.JLabel firstname;
     private javax.swing.JLabel firstname1;
     private javax.swing.JLabel firstname2;
@@ -420,17 +448,15 @@ public class workoutForm extends javax.swing.JFrame {
     private javax.swing.JLabel firstname6;
     private javax.swing.JLabel firstname7;
     private javax.swing.JLabel firstname8;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JComboBox<String> m_id;
-    public javax.swing.JTextField p_name;
+    public javax.swing.JComboBox<String> p_name;
     public javax.swing.JLabel planId;
     public javax.swing.JLabel st_label;
     public javax.swing.JComboBox<String> status;
     public javax.swing.JComboBox<String> week_dura;
-    private javax.swing.JPanel wrong;
     // End of variables declaration//GEN-END:variables
 }

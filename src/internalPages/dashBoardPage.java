@@ -30,7 +30,7 @@ public class dashBoardPage extends javax.swing.JInternalFrame {
       bi.setNorthPane(null);
       
       displaydata();
-      
+      getCardCounts();
        table.setRowHeight(30);
        table.setShowGrid(false);
        table.setIntercellSpacing(new java.awt.Dimension(0,0));
@@ -110,6 +110,32 @@ void displaydata() {
 
     con.displayData(query, table); 
 }
+
+public void getCardCounts() {
+    configclass con = new configclass();
+    try {
+        // 1. Fetch Member Count
+        java.sql.ResultSet rsMembers = con.getData("SELECT COUNT(*) FROM members");
+        if (rsMembers.next()) {
+            members.setText(String.valueOf(rsMembers.getInt(1)));
+        }
+
+        // 2. Fetch Transaction Count
+        java.sql.ResultSet rsTrans = con.getData("SELECT COUNT(*) FROM transactions");
+        if (rsTrans.next()) {
+            transaction.setText(String.valueOf(rsTrans.getInt(1)));
+        }
+
+        // 3. Fetch Payment Count (from your payments/registration table)
+        java.sql.ResultSet rsPay = con.getData("SELECT COUNT(*) FROM payments");
+        if (rsPay.next()) {
+            payments.setText(String.valueOf(rsPay.getInt(1)));
+        }
+        
+    } catch (java.sql.SQLException e) {
+        System.out.println("Error fetching card counts: " + e.getMessage());
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -177,7 +203,7 @@ void displaydata() {
         jPanel6.setOpaque(false);
         ;
         jLabel1 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        members = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel3 = jPanel3 = new javax.swing.JPanel() {
             @Override
@@ -236,7 +262,7 @@ void displaydata() {
         jPanel7.setOpaque(false);
         ;
         jLabel2 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        transaction = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel4 = jPanel4 = new javax.swing.JPanel() {
             @Override
@@ -295,7 +321,7 @@ void displaydata() {
         jPanel8.setOpaque(false);
         ;
         jLabel3 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        payments = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
@@ -316,11 +342,11 @@ void displaydata() {
 
         jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 50, 60));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("0");
-        jLabel5.setToolTipText("");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
+        members.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        members.setForeground(new java.awt.Color(255, 255, 255));
+        members.setText("0");
+        members.setToolTipText("");
+        jPanel2.add(members, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -341,11 +367,11 @@ void displaydata() {
 
         jPanel3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 50, 60));
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("0");
-        jLabel7.setToolTipText("");
-        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
+        transaction.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        transaction.setForeground(new java.awt.Color(255, 255, 255));
+        transaction.setText("0");
+        transaction.setToolTipText("");
+        jPanel3.add(transaction, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -365,11 +391,11 @@ void displaydata() {
 
         jPanel4.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 50, 60));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("0");
-        jLabel9.setToolTipText("");
-        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
+        payments.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        payments.setForeground(new java.awt.Color(255, 255, 255));
+        payments.setText("0");
+        payments.setToolTipText("");
+        jPanel4.add(payments, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -401,11 +427,8 @@ void displaydata() {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -414,6 +437,9 @@ void displaydata() {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel members;
+    private javax.swing.JLabel payments;
     private javax.swing.JTable table;
+    private javax.swing.JLabel transaction;
     // End of variables declaration//GEN-END:variables
 }

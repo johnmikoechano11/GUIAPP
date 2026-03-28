@@ -9,11 +9,18 @@ import internalPages.member;
 import javax.swing.JOptionPane;
 import internalPages.Transaction_page;
 import config.configclass;
+import internalPages.Payments_page;
 import java.awt.Color;
 
 public class TransactionForm extends javax.swing.JFrame {
 
     public TransactionForm() {
+          if (!config.Singleton.getInstance().isLoggedIn()) {
+        JOptionPane.showMessageDialog(null, "Please Login First!");
+        new logIn().setVisible(true);
+        this.dispose();
+        return; 
+    }
         initComponents();
         fillTransactionCombo();
         this.setBackground(new java.awt.Color(0,0,0,0));
@@ -58,7 +65,7 @@ public class TransactionForm extends javax.swing.JFrame {
         this.dispose();
         dashboard dash = new dashboard();
         dash.setVisible(true);
-        member up = new member();
+        Transaction_page up = new Transaction_page();
         dash.maindesktop.add(up).setVisible(true);
     }
     private void fillTransactionCombo() {
@@ -99,7 +106,7 @@ public class TransactionForm extends javax.swing.JFrame {
   
     String receiptText = 
           "------------------------------------------\n"
-        + "             AEROTICKET GYM               \n"
+        + "            MUSCLE FITNESS                \n"
         + "           Official Receipt               \n"
         + "------------------------------------------\n"
         + " Date: " + date + "\n"
@@ -157,79 +164,18 @@ private void fetchPaymentAmount() {
         }
     }
 }
+
+  public void close1(){
+        this.dispose();
+        dashboard dash = new dashboard();
+        dash.setVisible(true);
+        Transaction_page up = new Transaction_page();
+        dash.maindesktop.add(up).setVisible(true);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        header = header = new javax.swing.JPanel() {
-            @Override
-            protected void paintComponent(java.awt.Graphics g) {
-                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
-                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-
-                int shadowSize = 10;
-                int borderRadius = 25;
-                int width = getWidth() - shadowSize * 2;
-                int height = getHeight() - shadowSize * 2;
-
-                // 1. Draw the Shadow (Top corners only)
-                for (int i = 0; i < shadowSize; i++) {
-                    g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); 
-                    // Draw shadow as a round rect
-                    g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);
-                }
-
-                // 2. Fill the Main Panel
-                g2.setColor(getBackground());
-
-                // --- THE TRICK FOR TOP BORDER RADIUS ONLY ---
-                // Fill the top half with rounded corners
-                g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);
-
-                // Fill the bottom half with a sharp rectangle to "cancel out" the bottom curves
-                // We start from the middle and fill to the very bottom
-                g2.fillRect(shadowSize, shadowSize + (height / 2), width, (height / 2));
-
-                g2.dispose();
-            }
-        };
-        header.setOpaque(false);
-        jLabel2 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        wrong = wrong = new javax.swing.JPanel() {
-            @Override
-            protected void paintComponent(java.awt.Graphics g) {
-                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
-                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-
-                int shadowSize = 10;
-                int borderRadius = 25;
-                int width = getWidth() - shadowSize * 2;
-                int height = getHeight() - shadowSize * 2;
-
-                // 1. Draw the Shadow (Top corners only)
-                for (int i = 0; i < shadowSize; i++) {
-                    g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); 
-                    // Draw shadow as a round rect
-                    g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);
-                }
-
-                // 2. Fill the Main Panel
-                g2.setColor(getBackground());
-
-                // --- THE TRICK FOR TOP BORDER RADIUS ONLY ---
-                // Fill the top half with rounded corners
-                g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);
-
-                // Fill the bottom half with a sharp rectangle to "cancel out" the bottom curves
-                // We start from the middle and fill to the very bottom
-                g2.fillRect(shadowSize, shadowSize + (height / 2), width, (height / 2));
-
-                g2.dispose();
-            }
-        };
-        wrong.setOpaque(false);
-        jLabel1 = new javax.swing.JLabel();
         body = new javax.swing.JPanel();
         body = new javax.swing.JPanel() {
             @Override
@@ -298,7 +244,9 @@ private void fetchPaymentAmount() {
         firstname4 = new javax.swing.JLabel();
         t_date = new javax.swing.JTextField();
         m_id = new javax.swing.JComboBox<>();
-        header1 = header = new javax.swing.JPanel() {
+        method = new javax.swing.JComboBox<>();
+        p_id = new javax.swing.JComboBox<>();
+        header = header = new javax.swing.JPanel() {
             @Override
             protected void paintComponent(java.awt.Graphics g) {
                 java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
@@ -331,91 +279,13 @@ private void fetchPaymentAmount() {
             }
         };
         header.setOpaque(false);
-        jLabel3 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        wrong1 = wrong = new javax.swing.JPanel() {
-            @Override
-            protected void paintComponent(java.awt.Graphics g) {
-                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
-                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-
-                int shadowSize = 10;
-                int borderRadius = 25;
-                int width = getWidth() - shadowSize * 2;
-                int height = getHeight() - shadowSize * 2;
-
-                // 1. Draw the Shadow (Top corners only)
-                for (int i = 0; i < shadowSize; i++) {
-                    g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); 
-                    // Draw shadow as a round rect
-                    g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);
-                }
-
-                // 2. Fill the Main Panel
-                g2.setColor(getBackground());
-
-                // --- THE TRICK FOR TOP BORDER RADIUS ONLY ---
-                // Fill the top half with rounded corners
-                g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);
-
-                // Fill the bottom half with a sharp rectangle to "cancel out" the bottom curves
-                // We start from the middle and fill to the very bottom
-                g2.fillRect(shadowSize, shadowSize + (height / 2), width, (height / 2));
-
-                g2.dispose();
-            }
-        };
-        wrong.setOpaque(false);
-        jLabel4 = new javax.swing.JLabel();
-        method = new javax.swing.JComboBox<>();
-        p_id = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        close = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        header.setBackground(new java.awt.Color(27, 42, 78));
-        header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("PAYMENTS FORM");
-        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        header.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, 20));
-
-        jPanel5.setBackground(new java.awt.Color(102, 102, 102));
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
-        );
-
-        header.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, -1, 40));
-
-        wrong.setBackground(new java.awt.Color(27, 42, 78));
-        wrong.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                wrongMouseClicked(evt);
-            }
-        });
-        wrong.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("×");
-        wrong.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 30, 50));
-
-        header.add(wrong, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 80, 60));
-
-        getContentPane().add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, -1));
 
         body.setBackground(new java.awt.Color(244, 247, 246));
         body.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -434,9 +304,10 @@ private void fetchPaymentAmount() {
         firstname2.setForeground(new java.awt.Color(27, 42, 78));
         firstname2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         firstname2.setText("Status:");
-        body.add(firstname2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, 70, 30));
+        body.add(firstname2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, 70, 30));
 
         add.setBackground(new java.awt.Color(243, 156, 18));
+        add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addMouseClicked(evt);
@@ -493,19 +364,19 @@ private void fetchPaymentAmount() {
         firstname7.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         firstname7.setForeground(new java.awt.Color(27, 42, 78));
         firstname7.setText("Amount:");
-        body.add(firstname7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 70, 30));
+        body.add(firstname7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, 70, 30));
 
         firstname3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         firstname3.setForeground(new java.awt.Color(27, 42, 78));
         firstname3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         firstname3.setText("Method:");
-        body.add(firstname3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 120, 30));
+        body.add(firstname3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 80, 30));
 
         firstname4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         firstname4.setForeground(new java.awt.Color(27, 42, 78));
         firstname4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         firstname4.setText("Transaction Date:");
-        body.add(firstname4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 120, 30));
+        body.add(firstname4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 140, 30));
 
         t_date.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         t_date.setForeground(new java.awt.Color(27, 42, 78));
@@ -520,49 +391,6 @@ private void fetchPaymentAmount() {
             }
         });
         body.add(m_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 80, 30));
-
-        header1.setBackground(new java.awt.Color(27, 42, 78));
-        header1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("PAYMENTS FORM");
-        jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        header1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, 20));
-
-        jPanel6.setBackground(new java.awt.Color(102, 102, 102));
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
-        );
-
-        header1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, -1, 40));
-
-        wrong1.setBackground(new java.awt.Color(27, 42, 78));
-        wrong1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                wrong1MouseClicked(evt);
-            }
-        });
-        wrong1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("×");
-        wrong1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 30, 50));
-
-        header1.add(wrong1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 80, 60));
-
-        body.add(header1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, -1));
 
         method.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         method.setForeground(new java.awt.Color(27, 42, 78));
@@ -583,39 +411,53 @@ private void fetchPaymentAmount() {
         });
         body.add(p_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 80, 30));
 
+        header.setBackground(new java.awt.Color(27, 42, 78));
+        header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("TRANSACTIONS FORM");
+        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        header.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 270, 20));
+
+        jPanel5.setBackground(new java.awt.Color(102, 102, 102));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        header.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, -1, 40));
+
+        close.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        close.setForeground(new java.awt.Color(255, 255, 255));
+        close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        close.setText("×");
+        close.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                closeMouseEntered(evt);
+            }
+        });
+        header.add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, 60, 50));
+
+        body.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 60));
+
         getContentPane().add(body, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 520, 450));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void wrongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wrongMouseClicked
-        // 1. Close this popup form
-        this.dispose();
-
-        // 2. Find the dashboard window you are already in
-        javax.swing.JFrame topFrame = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
-
-        try {
-            // 3. Access the blue area (maindesktop)
-            java.lang.reflect.Field field = topFrame.getClass().getDeclaredField("maindesktop");
-            field.setAccessible(true);
-            javax.swing.JDesktopPane desktop = (javax.swing.JDesktopPane) field.get(topFrame);
-
-            // 4. Clear the screen and load the MEMBERS table
-            desktop.removeAll();
-            Transaction_page m = new Transaction_page(); // This loads your table page
-            desktop.add(m).setVisible(true);
-
-            // 5. Refresh the screen
-            desktop.revalidate();
-            desktop.repaint();
-
-        } catch (Exception e) {
-
-            System.out.println("Error returning to Members: " + e.getMessage());
-        }
-    }//GEN-LAST:event_wrongMouseClicked
 
     private void statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusActionPerformed
 
@@ -688,34 +530,6 @@ private void fetchPaymentAmount() {
 
     }//GEN-LAST:event_m_idActionPerformed
 
-    private void wrong1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wrong1MouseClicked
-        // 1. Close this popup form
-        this.dispose();
-
-        // 2. Find the dashboard window you are already in
-        javax.swing.JFrame topFrame = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
-
-        try {
-            // 3. Access the blue area (maindesktop)
-            java.lang.reflect.Field field = topFrame.getClass().getDeclaredField("maindesktop");
-            field.setAccessible(true);
-            javax.swing.JDesktopPane desktop = (javax.swing.JDesktopPane) field.get(topFrame);
-
-            // 4. Clear the screen and load the MEMBERS table
-            desktop.removeAll();
-            member m = new member(); // This loads your table page
-            desktop.add(m).setVisible(true);
-
-            // 5. Refresh the screen
-            desktop.revalidate();
-            desktop.repaint();
-
-        } catch (Exception e) {
-
-            System.out.println("Error returning to Members: " + e.getMessage());
-        }
-    }//GEN-LAST:event_wrong1MouseClicked
-
     private void methodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_methodActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_methodActionPerformed
@@ -723,6 +537,25 @@ private void fetchPaymentAmount() {
     private void p_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_idActionPerformed
        fetchPaymentAmount();
     }//GEN-LAST:event_p_idActionPerformed
+
+    private void closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseEntered
+
+    }//GEN-LAST:event_closeMouseEntered
+
+    private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
+        int response = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to exit the application?",
+            "Exit Confirmation",
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (response == javax.swing.JOptionPane.YES_OPTION) {
+
+            close1();
+        }
+    }//GEN-LAST:event_closeMouseClicked
 
     /**
      * @param args the command line arguments
@@ -762,6 +595,7 @@ private void fetchPaymentAmount() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JPanel add;
     private javax.swing.JPanel body;
+    private javax.swing.JLabel close;
     private javax.swing.JLabel firstname2;
     private javax.swing.JLabel firstname3;
     private javax.swing.JLabel firstname4;
@@ -769,13 +603,8 @@ private void fetchPaymentAmount() {
     private javax.swing.JLabel firstname6;
     private javax.swing.JLabel firstname7;
     private javax.swing.JPanel header;
-    private javax.swing.JPanel header1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     public javax.swing.JTextField m_amount;
     public javax.swing.JComboBox<String> m_id;
     public javax.swing.JComboBox<String> method;
@@ -784,7 +613,5 @@ private void fetchPaymentAmount() {
     public javax.swing.JComboBox<String> status;
     public javax.swing.JTextField t_date;
     public javax.swing.JLabel t_id;
-    private javax.swing.JPanel wrong;
-    private javax.swing.JPanel wrong1;
     // End of variables declaration//GEN-END:variables
 }

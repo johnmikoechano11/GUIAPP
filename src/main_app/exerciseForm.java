@@ -6,19 +6,28 @@
 package main_app;
 
 import config.configclass;
+import internalPages.exercise_page;
+import internalPages.workoutPlan_page;
 import java.awt.Color;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Angie
  */
 public class exerciseForm extends javax.swing.JFrame {
-
+private boolean isRefreshing = false;
     /**
      * Creates new form exerciseForm
      */
     public exerciseForm() {
+           if (!config.Singleton.getInstance().isLoggedIn()) {
+        JOptionPane.showMessageDialog(null, "Please Login First!");
+        new logIn().setVisible(true);
+        this.dispose();
+        return; 
+    }
         initComponents();
         fillPlanCombo();
         
@@ -26,16 +35,27 @@ public class exerciseForm extends javax.swing.JFrame {
                 
     }
    private void fillPlanCombo() {
+    isRefreshing = true; // Block events
     try {
         configclass dbc = new configclass();
-      
-        ResultSet rs = dbc.getData("SELECT wp_id, plan_name FROM workout_plans");
-        wp_id.removeAllItems(); 
+        ResultSet rs = dbc.getData("SELECT wp_id FROM workout_plans");
+        
+        wp_id.removeAllItems(); // This usually triggers ActionPerformed!
+        
         while(rs.next()) {
             wp_id.addItem(rs.getString("wp_id"));
         }
     } catch(Exception e) {
         System.out.println("Combo Error: " + e.getMessage());
+    } finally {
+        isRefreshing = false; // Allow events again
+    }
+    
+    // Manually trigger the first load now that the block is off
+    if (wp_id.getItemCount() > 0) {
+        wp_id.setSelectedIndex(0);
+        // Manually call it once to fill the text field
+        wp_idActionPerformed(null); 
     }
 }
    private int validateForm() {
@@ -47,6 +67,13 @@ public class exerciseForm extends javax.swing.JFrame {
     return 1;
 }
    public String action;
+      public void close(){
+        this.dispose();
+        dashboard dash = new dashboard();
+        dash.setVisible(true);
+        exercise_page up = new exercise_page();
+        dash.maindesktop.add(up).setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -156,40 +183,7 @@ public class exerciseForm extends javax.swing.JFrame {
         header.setOpaque(false);
         jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        wrong = wrong = new javax.swing.JPanel() {
-            @Override
-            protected void paintComponent(java.awt.Graphics g) {
-                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
-                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-
-                int shadowSize = 10;
-                int borderRadius = 25;
-                int width = getWidth() - shadowSize * 2;
-                int height = getHeight() - shadowSize * 2;
-
-                // 1. Draw the Shadow (Top corners only)
-                for (int i = 0; i < shadowSize; i++) {
-                    g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); 
-                    // Draw shadow as a round rect
-                    g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);
-                }
-
-                // 2. Fill the Main Panel
-                g2.setColor(getBackground());
-
-                // --- THE TRICK FOR TOP BORDER RADIUS ONLY ---
-                // Fill the top half with rounded corners
-                g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);
-
-                // Fill the bottom half with a sharp rectangle to "cancel out" the bottom curves
-                // We start from the middle and fill to the very bottom
-                g2.fillRect(shadowSize, shadowSize + (height / 2), width, (height / 2));
-
-                g2.dispose();
-            }
-        };
-        wrong.setOpaque(false);
-        jLabel1 = new javax.swing.JLabel();
+        close = new javax.swing.JLabel();
         ex_id = new javax.swing.JLabel();
         Sets = new javax.swing.JSpinner();
         Reps = new javax.swing.JSpinner();
@@ -270,6 +264,11 @@ public class exerciseForm extends javax.swing.JFrame {
         rest.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         rest.setForeground(new java.awt.Color(27, 42, 78));
         rest.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(209, 213, 216), java.awt.Color.darkGray, null, null));
+        rest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                restActionPerformed(evt);
+            }
+        });
         body.add(rest, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 200, 30));
 
         wp_id.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -306,23 +305,22 @@ public class exerciseForm extends javax.swing.JFrame {
 
         header.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, -1, 40));
 
-        wrong.setBackground(new java.awt.Color(27, 42, 78));
-        wrong.addMouseListener(new java.awt.event.MouseAdapter() {
+        close.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        close.setForeground(new java.awt.Color(255, 255, 255));
+        close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        close.setText("×");
+        close.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        close.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                wrongMouseClicked(evt);
+                closeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                closeMouseEntered(evt);
             }
         });
-        wrong.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        header.add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, 60, 50));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("×");
-        wrong.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 30, 50));
-
-        header.add(wrong, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 80, 60));
-
-        body.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, -1));
+        body.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 60));
         body.add(ex_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 130, 30));
 
         Sets.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -385,7 +383,7 @@ public class exerciseForm extends javax.swing.JFrame {
 
             if (dbc.insertData(sql) == 1) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Exercise Added!");
-                this.dispose(); 
+                close(); 
             }
         } else if ("Update".equals(action)) {
             String exerciseID = ex_id.getText(); 
@@ -399,7 +397,7 @@ public class exerciseForm extends javax.swing.JFrame {
 
             dbc.updateData(sql);
             javax.swing.JOptionPane.showMessageDialog(null, "Exercise Updated!");
-            this.dispose();
+            close();
         }
         }
     }//GEN-LAST:event_addMouseClicked
@@ -417,16 +415,27 @@ public class exerciseForm extends javax.swing.JFrame {
     }//GEN-LAST:event_addMousePressed
 
     private void ex_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ex_nameActionPerformed
-
+    
     }//GEN-LAST:event_ex_nameActionPerformed
 
     private void wp_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wp_idActionPerformed
-       
-    }//GEN-LAST:event_wp_idActionPerformed
+    if (isRefreshing) return; 
 
-    private void wrongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wrongMouseClicked
-   
-    }//GEN-LAST:event_wrongMouseClicked
+    if (wp_id.getSelectedItem() != null) {
+        String selectedID = wp_id.getSelectedItem().toString();
+        try {
+            config.configclass dbc = new config.configclass();
+            String query = "SELECT plan_name FROM workout_plans WHERE wp_id = '" + selectedID + "'";
+            java.sql.ResultSet rs = dbc.getData(query);
+            
+            if (rs.next()) {
+                ex_name.setText(rs.getString("plan_name"));
+            }
+        } catch (Exception e) {
+            System.out.println("Fetch Plan Name Error: " + e.getMessage());
+        }
+    }
+    }//GEN-LAST:event_wp_idActionPerformed
 
     private void SetsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SetsStateChanged
 
@@ -435,6 +444,29 @@ public class exerciseForm extends javax.swing.JFrame {
     private void RepsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_RepsStateChanged
 
     }//GEN-LAST:event_RepsStateChanged
+
+    private void restActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_restActionPerformed
+
+    private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
+        int response = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to exit the application?",
+            "Exit Confirmation",
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (response == javax.swing.JOptionPane.YES_OPTION) {
+
+            close();
+        }
+    }//GEN-LAST:event_closeMouseClicked
+
+    private void closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseEntered
+
+    }//GEN-LAST:event_closeMouseEntered
 
     /**
      * @param args the command line arguments
@@ -476,6 +508,7 @@ public class exerciseForm extends javax.swing.JFrame {
     public javax.swing.JSpinner Sets;
     public javax.swing.JPanel add;
     private javax.swing.JPanel body;
+    private javax.swing.JLabel close;
     public javax.swing.JLabel ex_id;
     public javax.swing.JTextField ex_name;
     private javax.swing.JLabel firstname2;
@@ -484,12 +517,10 @@ public class exerciseForm extends javax.swing.JFrame {
     private javax.swing.JLabel firstname6;
     private javax.swing.JLabel firstname7;
     private javax.swing.JPanel header;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel5;
     public javax.swing.JTextField rest;
     public javax.swing.JLabel st_label;
     public javax.swing.JComboBox<String> wp_id;
-    private javax.swing.JPanel wrong;
     // End of variables declaration//GEN-END:variables
 }

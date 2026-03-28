@@ -362,47 +362,30 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Container class="javax.swing.JPanel" name="wrong">
+            <Component class="javax.swing.JLabel" name="close">
               <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="4e" green="2a" red="1b" type="rgb"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="36" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="&#xd7;"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Default Cursor"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="wrongMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="closeMouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="closeMouseEntered"/>
               </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="wrong = new javax.swing.JPanel() {&#xd;&#xa;    @Override&#xd;&#xa;    protected void paintComponent(java.awt.Graphics g) {&#xd;&#xa;        java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();&#xd;&#xa;        g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);&#xd;&#xa;&#xd;&#xa;        int shadowSize = 10;&#xd;&#xa;        int borderRadius = 25;&#xd;&#xa;        int width = getWidth() - shadowSize * 2;&#xd;&#xa;        int height = getHeight() - shadowSize * 2;&#xd;&#xa;&#xd;&#xa;        // 1. Draw the Shadow (Top corners only)&#xd;&#xa;        for (int i = 0; i &lt; shadowSize; i++) {&#xd;&#xa;            g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); &#xd;&#xa;            // Draw shadow as a round rect&#xd;&#xa;            g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);&#xd;&#xa;        }&#xd;&#xa;&#xd;&#xa;        // 2. Fill the Main Panel&#xd;&#xa;        g2.setColor(getBackground());&#xd;&#xa;        &#xd;&#xa;        // --- THE TRICK FOR TOP BORDER RADIUS ONLY ---&#xd;&#xa;        // Fill the top half with rounded corners&#xd;&#xa;        g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);&#xd;&#xa;        &#xd;&#xa;        // Fill the bottom half with a sharp rectangle to &quot;cancel out&quot; the bottom curves&#xd;&#xa;        // We start from the middle and fill to the very bottom&#xd;&#xa;        g2.fillRect(shadowSize, shadowSize + (height / 2), width, (height / 2));&#xd;&#xa;        &#xd;&#xa;        g2.dispose();&#xd;&#xa;    }&#xd;&#xa;};&#xd;&#xa;wrong.setOpaque(false);"/>
-              </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="610" y="0" width="80" height="80"/>
+                  <AbsoluteConstraints x="630" y="0" width="40" height="70"/>
                 </Constraint>
               </Constraints>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-                <Property name="useNullLayout" type="boolean" value="false"/>
-              </Layout>
-              <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel3">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="36" style="0"/>
-                    </Property>
-                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
-                    <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="&#xd7;"/>
-                  </Properties>
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="20" y="0" width="40" height="70"/>
-                    </Constraint>
-                  </Constraints>
-                </Component>
-              </SubComponents>
-            </Container>
+            </Component>
           </SubComponents>
         </Container>
         <Component class="javax.swing.JLabel" name="browse1">

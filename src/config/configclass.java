@@ -5,6 +5,7 @@ import static javax.management.remote.JMXConnectorFactory.connect;
 import static javax.management.remote.JMXConnectorFactory.connect;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
+import main_app.logIn;
 
 public class configclass {
 

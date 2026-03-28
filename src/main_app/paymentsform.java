@@ -6,6 +6,7 @@
 package main_app;
 
 import config.configclass;
+import internalPages.Payments_page;
 import internalPages.member;
 import java.awt.Color;
 import java.sql.ResultSet;
@@ -23,6 +24,12 @@ public class paymentsform extends javax.swing.JFrame {
      * Creates new form paymentsform
      */
     public paymentsform() {
+          if (!config.Singleton.getInstance().isLoggedIn()) {
+        JOptionPane.showMessageDialog(null, "Please Login First!");
+        new logIn().setVisible(true);
+        this.dispose();
+        return; 
+    }
         initComponents();
         this.setBackground(new java.awt.Color(0,0,0,0));
    
@@ -54,7 +61,7 @@ int validateRegister() {
         this.dispose();
         dashboard dash = new dashboard();
         dash.setVisible(true);
-        member up = new member();
+        Payments_page up = new Payments_page();
         dash.maindesktop.add(up).setVisible(true);
     }
     
@@ -126,7 +133,8 @@ public void calculatePayment(String selectedType) {
   
     public void printReceipt() {
         String receiptText = 
-              "          GYM MANAGEMENT SYSTEM          \n"
+              "-------------------------------------------\n"    
+            + "               MUSCLE FITNESS              \n"
             + "          Official Payment Receipt         \n"
             + "-------------------------------------------\n"
             + " Payment ID:    " + p_id.getText() + "\n"
@@ -256,41 +264,7 @@ public void calculatePayment(String selectedType) {
         };
         header.setOpaque(false);
         jLabel2 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        wrong = wrong = new javax.swing.JPanel() {
-            @Override
-            protected void paintComponent(java.awt.Graphics g) {
-                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
-                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-
-                int shadowSize = 10;
-                int borderRadius = 25;
-                int width = getWidth() - shadowSize * 2;
-                int height = getHeight() - shadowSize * 2;
-
-                // 1. Draw the Shadow (Top corners only)
-                for (int i = 0; i < shadowSize; i++) {
-                    g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); 
-                    // Draw shadow as a round rect
-                    g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);
-                }
-
-                // 2. Fill the Main Panel
-                g2.setColor(getBackground());
-
-                // --- THE TRICK FOR TOP BORDER RADIUS ONLY ---
-                // Fill the top half with rounded corners
-                g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);
-
-                // Fill the bottom half with a sharp rectangle to "cancel out" the bottom curves
-                // We start from the middle and fill to the very bottom
-                g2.fillRect(shadowSize, shadowSize + (height / 2), width, (height / 2));
-
-                g2.dispose();
-            }
-        };
-        wrong.setOpaque(false);
-        jLabel1 = new javax.swing.JLabel();
+        close5 = new javax.swing.JLabel();
         type = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -317,6 +291,7 @@ public void calculatePayment(String selectedType) {
         body.add(firstname2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, 70, 30));
 
         add.setBackground(new java.awt.Color(243, 156, 18));
+        add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addMouseClicked(evt);
@@ -412,38 +387,22 @@ public void calculatePayment(String selectedType) {
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         header.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, 20));
 
-        jPanel5.setBackground(new java.awt.Color(102, 102, 102));
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
-        );
-
-        header.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, -1, 40));
-
-        wrong.setBackground(new java.awt.Color(27, 42, 78));
-        wrong.addMouseListener(new java.awt.event.MouseAdapter() {
+        close5.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        close5.setForeground(new java.awt.Color(255, 255, 255));
+        close5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        close5.setText("×");
+        close5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        close5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                wrongMouseClicked(evt);
+                close5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                close5MouseEntered(evt);
             }
         });
-        wrong.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        header.add(close5, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, 60, 50));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("×");
-        wrong.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 30, 50));
-
-        header.add(wrong, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 80, 60));
-
-        body.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, -1));
+        body.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 60));
 
         type.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         type.setForeground(new java.awt.Color(27, 42, 78));
@@ -506,7 +465,7 @@ if (validateRegister() == 1) {
                 + "p_type = '" + payType + "', "
                 + "p_date = '" + payDate + "', "
                 + "p_status = '" + payStat + "' "
-                + "WHERE p_id = '" + payID + "'";
+                + "WHERE r_id = '" + payID + "'";
 
             dbc.updateData(sql);
             JOptionPane.showMessageDialog(null, "Payment Updated Successfully!");
@@ -533,34 +492,6 @@ if (validateRegister() == 1) {
     }
     }//GEN-LAST:event_m_idActionPerformed
 
-    private void wrongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wrongMouseClicked
-        // 1. Close this popup form
-        this.dispose();
-
-        // 2. Find the dashboard window you are already in
-        javax.swing.JFrame topFrame = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
-
-        try {
-            // 3. Access the blue area (maindesktop)
-            java.lang.reflect.Field field = topFrame.getClass().getDeclaredField("maindesktop");
-            field.setAccessible(true);
-            javax.swing.JDesktopPane desktop = (javax.swing.JDesktopPane) field.get(topFrame);
-
-            // 4. Clear the screen and load the MEMBERS table
-            desktop.removeAll();
-            member m = new member(); // This loads your table page
-            desktop.add(m).setVisible(true);
-
-            // 5. Refresh the screen
-            desktop.revalidate();
-            desktop.repaint();
-
-        } catch (Exception e) {
-
-            System.out.println("Error returning to Members: " + e.getMessage());
-        }
-    }//GEN-LAST:event_wrongMouseClicked
-
     private void typeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_typeActionPerformed
@@ -568,6 +499,25 @@ if (validateRegister() == 1) {
     private void addMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMousePressed
        add.setBackground(new Color(211, 84, 0));
     }//GEN-LAST:event_addMousePressed
+
+    private void close5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close5MouseClicked
+        int response = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to exit the application?",
+            "Exit Confirmation",
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (response == javax.swing.JOptionPane.YES_OPTION) {
+
+            close();
+        }
+    }//GEN-LAST:event_close5MouseClicked
+
+    private void close5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close5MouseEntered
+
+    }//GEN-LAST:event_close5MouseEntered
 
     /**
      * @param args the command line arguments
@@ -607,6 +557,7 @@ if (validateRegister() == 1) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JPanel add;
     private javax.swing.JPanel body;
+    private javax.swing.JLabel close5;
     private javax.swing.JLabel firstname2;
     private javax.swing.JLabel firstname3;
     private javax.swing.JLabel firstname4;
@@ -614,9 +565,7 @@ if (validateRegister() == 1) {
     private javax.swing.JLabel firstname6;
     private javax.swing.JLabel firstname7;
     private javax.swing.JPanel header;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel5;
     public javax.swing.JTextField m_amount;
     public javax.swing.JComboBox<String> m_id;
     public javax.swing.JTextField p_date;
@@ -624,6 +573,5 @@ if (validateRegister() == 1) {
     public javax.swing.JLabel st_label;
     public javax.swing.JComboBox<String> status;
     public javax.swing.JComboBox<String> type;
-    private javax.swing.JPanel wrong;
     // End of variables declaration//GEN-END:variables
 }

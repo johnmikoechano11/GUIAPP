@@ -35,6 +35,12 @@ public class Profileform extends javax.swing.JFrame {
      * Creates new form Profileform
      */
     public Profileform() {
+          if (!config.Singleton.getInstance().isLoggedIn()) {
+        JOptionPane.showMessageDialog(null, "Please Login First!");
+        new logIn().setVisible(true);
+        this.dispose();
+        return; 
+    }
         initComponents();
         profile();
         displayImageIcon();
@@ -334,40 +340,7 @@ private void openCropTool(File file) {
         };
         header.setOpaque(false);
         jLabel1 = new javax.swing.JLabel();
-        wrong = wrong = new javax.swing.JPanel() {
-            @Override
-            protected void paintComponent(java.awt.Graphics g) {
-                java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
-                g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-
-                int shadowSize = 10;
-                int borderRadius = 25;
-                int width = getWidth() - shadowSize * 2;
-                int height = getHeight() - shadowSize * 2;
-
-                // 1. Draw the Shadow (Top corners only)
-                for (int i = 0; i < shadowSize; i++) {
-                    g2.setColor(new java.awt.Color(0, 0, 0, (shadowSize - i) * 5)); 
-                    // Draw shadow as a round rect
-                    g2.drawRoundRect(shadowSize - i, shadowSize - i, width + i * 2, height + i * 2, borderRadius, borderRadius);
-                }
-
-                // 2. Fill the Main Panel
-                g2.setColor(getBackground());
-
-                // --- THE TRICK FOR TOP BORDER RADIUS ONLY ---
-                // Fill the top half with rounded corners
-                g2.fillRoundRect(shadowSize, shadowSize, width, height, borderRadius, borderRadius);
-
-                // Fill the bottom half with a sharp rectangle to "cancel out" the bottom curves
-                // We start from the middle and fill to the very bottom
-                g2.fillRect(shadowSize, shadowSize + (height / 2), width, (height / 2));
-
-                g2.dispose();
-            }
-        };
-        wrong.setOpaque(false);
-        jLabel3 = new javax.swing.JLabel();
+        close = new javax.swing.JLabel();
         browse1 = new javax.swing.JLabel();
         browse = new javax.swing.JLabel();
         btnSave = btnSave = new javax.swing.JPanel() {
@@ -558,21 +531,20 @@ private void openCropTool(File file) {
         jLabel1.setText("PROFILE FORM");
         header.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
 
-        wrong.setBackground(new java.awt.Color(27, 42, 78));
-        wrong.addMouseListener(new java.awt.event.MouseAdapter() {
+        close.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        close.setForeground(new java.awt.Color(255, 255, 255));
+        close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        close.setText("×");
+        close.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        close.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                wrongMouseClicked(evt);
+                closeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                closeMouseEntered(evt);
             }
         });
-        wrong.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("×");
-        wrong.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 40, 70));
-
-        header.add(wrong, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 0, 80, 80));
+        header.add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 0, 40, 70));
 
         body.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 80));
 
@@ -826,34 +798,6 @@ private void openCropTool(File file) {
     // REMOVED THE BROKEN ELSE BLOCK HERE
     }//GEN-LAST:event_btnDeleteMouseClicked
 
-    private void wrongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_wrongMouseClicked
-  
-        this.dispose();
-
-   
-        javax.swing.JFrame topFrame = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
-
-        try {
-          
-            java.lang.reflect.Field field = topFrame.getClass().getDeclaredField("maindesktop");
-            field.setAccessible(true);
-            javax.swing.JDesktopPane desktop = (javax.swing.JDesktopPane) field.get(topFrame);
-
-        
-            desktop.removeAll();
-            dashboard db = new dashboard(); 
-            desktop.add(db).setVisible(true);
-
-        
-            desktop.revalidate();
-            desktop.repaint();
-
-        } catch (Exception e) {
-
-            System.out.println("Error returning to Members: " + e.getMessage());
-        }
-    }//GEN-LAST:event_wrongMouseClicked
-
     private void btnSaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseEntered
       btnSave.setBackground(new Color(46, 204, 113));
     }//GEN-LAST:event_btnSaveMouseEntered
@@ -910,6 +854,25 @@ private void openCropTool(File file) {
     }
     
     }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
+        int response = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to exit the application?",
+            "Exit Confirmation",
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (response == javax.swing.JOptionPane.YES_OPTION) {
+
+            System.exit(0);
+        }
+    }//GEN-LAST:event_closeMouseClicked
+
+    private void closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseEntered
+
+    }//GEN-LAST:event_closeMouseEntered
     
     /**
      * @param args the command line arguments
@@ -954,6 +917,7 @@ private void openCropTool(File file) {
     private javax.swing.JPanel btnDelete;
     private javax.swing.JPanel btnSave;
     private javax.swing.JPanel btnUpdate;
+    private javax.swing.JLabel close;
     public javax.swing.JLabel cont;
     public javax.swing.JLabel email;
     public javax.swing.JLabel f_name;
@@ -962,7 +926,6 @@ private void openCropTool(File file) {
     private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -974,6 +937,5 @@ private void openCropTool(File file) {
     public javax.swing.JLabel p_email;
     public javax.swing.JLabel p_id;
     public javax.swing.JLabel profile;
-    private javax.swing.JPanel wrong;
     // End of variables declaration//GEN-END:variables
 }

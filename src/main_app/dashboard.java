@@ -9,6 +9,7 @@ package main_app;
     import internalPages.*;
     import internalPages.dashBoardPage;
     import config.Session;
+import javax.swing.JOptionPane;
     
 /**
  *
@@ -20,6 +21,12 @@ public class dashboard extends javax.swing.JFrame {
      * Creates new form dashboadrd
      */
     public dashboard() {
+      if (!config.Singleton.getInstance().isLoggedIn()) {
+        JOptionPane.showMessageDialog(null, "Please Login First!");
+        new logIn().setVisible(true);
+        this.dispose();
+        return; 
+    }
         initComponents();
      workout_plan.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));   
       exer.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 0));  
@@ -60,6 +67,8 @@ maindesktop.setUI(new javax.swing.plaf.basic.BasicDesktopPaneUI());
         workout_plan = new javax.swing.JLabel();
         trans = new javax.swing.JLabel();
         exer = new javax.swing.JLabel();
+        minimize = new javax.swing.JLabel();
+        close = new javax.swing.JLabel();
         maindesktop = new javax.swing.JDesktopPane();
         jLabel14 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -312,6 +321,32 @@ maindesktop.setUI(new javax.swing.plaf.basic.BasicDesktopPaneUI());
         });
         header.add(exer, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, -1, 70));
 
+        minimize.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        minimize.setForeground(new java.awt.Color(255, 255, 255));
+        minimize.setText("–");
+        minimize.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        minimize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeMouseClicked(evt);
+            }
+        });
+        header.add(minimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 30, 60));
+
+        close.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        close.setForeground(new java.awt.Color(255, 255, 255));
+        close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        close.setText("×");
+        close.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                closeMouseEntered(evt);
+            }
+        });
+        header.add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 0, 40, 60));
+
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 670, 70));
 
         maindesktop.setBackground(new java.awt.Color(255, 255, 255));
@@ -520,6 +555,29 @@ maindesktop.setUI(new javax.swing.plaf.basic.BasicDesktopPaneUI());
         maindesktop.add(ep).setVisible(true);
     }//GEN-LAST:event_exerMouseClicked
 
+    private void minimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeMouseClicked
+        this.setState(javax.swing.JFrame.ICONIFIED);
+    }//GEN-LAST:event_minimizeMouseClicked
+
+    private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
+        int response = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to exit the application?",
+            "Exit Confirmation",
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (response == javax.swing.JOptionPane.YES_OPTION) {
+
+            System.exit(0);
+        }
+    }//GEN-LAST:event_closeMouseClicked
+
+    private void closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseEntered
+
+    }//GEN-LAST:event_closeMouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -558,6 +616,7 @@ maindesktop.setUI(new javax.swing.plaf.basic.BasicDesktopPaneUI());
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel accounts;
+    private javax.swing.JLabel close;
     private javax.swing.JPanel dashpane;
     private javax.swing.JLabel exer;
     private javax.swing.JPanel header;
@@ -579,6 +638,7 @@ maindesktop.setUI(new javax.swing.plaf.basic.BasicDesktopPaneUI());
     private javax.swing.JPanel jPanel5;
     public javax.swing.JDesktopPane maindesktop;
     private javax.swing.JPanel members;
+    private javax.swing.JLabel minimize;
     private javax.swing.JPanel navbar;
     private javax.swing.JPanel payments;
     private javax.swing.JLabel trans;

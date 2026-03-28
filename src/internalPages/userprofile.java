@@ -458,17 +458,31 @@ void imageprofile() {
     }//GEN-LAST:event_logoutMousePressed
 
     private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked
-    reports rep = new reports();
+   reports rep = new reports();
     
    
-    javax.swing.JDesktopPane maindesktop = getDesktopPane(); 
+    javax.swing.JDesktopPane maindesktop = (javax.swing.JDesktopPane) javax.swing.SwingUtilities.getAncestorOfClass(javax.swing.JDesktopPane.class, this);
     
     if (maindesktop != null) {
+     
         maindesktop.removeAll();
+        
+       
         maindesktop.add(rep);
         rep.setVisible(true);
+        
+        
+        try {
+            rep.setSelected(true);
+        } catch (java.beans.PropertyVetoException e) {
+            System.out.println("Error selecting frame: " + e.getMessage());
+        }
+
+
         maindesktop.revalidate();
         maindesktop.repaint();
+    } else {
+        System.out.println("Error: Could not find maindesktop. Ensure userprofile is inside a JDesktopPane.");
     }
     }//GEN-LAST:event_reportsMouseClicked
 

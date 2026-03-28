@@ -19,6 +19,7 @@ import java.awt.FontMetrics;
 public class register extends javax.swing.JFrame {
    private final int[] buttonState = {0};
     public register() {
+        
         initComponents();
         this.setBackground(new java.awt.Color(0,0,0,0));
    
@@ -150,6 +151,7 @@ public class register extends javax.swing.JFrame {
         pword = new javax.swing.JPasswordField();
         jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        close = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -253,10 +255,11 @@ public class register extends javax.swing.JFrame {
         });
         reg_panel.add(register, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 460, 250, 40));
 
-        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 32)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 28)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(44, 62, 80));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("REGISTRATION");
-        reg_panel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 270, 30));
+        reg_panel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 10, 240, 40));
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -321,6 +324,21 @@ public class register extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Already have a account?");
         reg_panel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 500, 160, -1));
+
+        close.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        close.setForeground(new java.awt.Color(44, 62, 80));
+        close.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        close.setText("×");
+        close.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                closeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                closeMouseEntered(evt);
+            }
+        });
+        reg_panel.add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, 50, 50));
 
         getContentPane().add(reg_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 390, 530));
 
@@ -424,6 +442,25 @@ public class register extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel8MouseClicked
 
+    private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
+        int response = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to exit the application?",
+            "Exit Confirmation",
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (response == javax.swing.JOptionPane.YES_OPTION) {
+
+            System.exit(0);
+        }
+    }//GEN-LAST:event_closeMouseClicked
+
+    private void closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseEntered
+
+    }//GEN-LAST:event_closeMouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -460,6 +497,7 @@ public class register extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel close;
     private javax.swing.JTextField con;
     private javax.swing.JPasswordField cpword;
     private javax.swing.JTextField email;

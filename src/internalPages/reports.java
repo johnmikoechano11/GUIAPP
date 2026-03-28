@@ -13,6 +13,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
@@ -26,7 +27,7 @@ public class reports extends javax.swing.JInternalFrame {
      */
     public reports() {
         initComponents();
-        
+        getCardCount();
            
       this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
       BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
@@ -36,99 +37,129 @@ public class reports extends javax.swing.JInternalFrame {
      showSignupTrend(signupPanel);
     }
     
-    public void showRevenueTrends(javax.swing.JPanel displayPanel) {
-    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+   public void showRevenueTrends(javax.swing.JPanel displayPanel) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
+        try {
+            config.configclass con = new config.configclass();
+            // Query for last 7 days of revenue
+            String query = "SELECT t_date, SUM(t_amount) AS total FROM transactions GROUP BY t_date LIMIT 7";
+            java.sql.ResultSet rs = con.getData(query);
+
+            int count = 1;
+            while (rs.next()) {
+                dataset.addValue(rs.getDouble("total"), "Revenue", String.valueOf(count++));
+            }
+
+            JFreeChart barChart = ChartFactory.createBarChart(
+                    "Weekly Revenue Trends", "", "",
+                    dataset, PlotOrientation.VERTICAL, false, true, false);
+
+            CategoryPlot plot = barChart.getCategoryPlot();
+            plot.setBackgroundPaint(Color.WHITE);
+            plot.setRangeGridlinePaint(new Color(240, 240, 240));
+
+            // CUSTOM RENDERER: This fix ensures multiple colors appear
+            BarRenderer renderer = new BarRenderer() {
+                @Override
+                public java.awt.Paint getItemPaint(int row, int col) {
+                    switch (col % 3) {
+                        case 0: return new Color(39, 174, 96);   // Emerald Green
+                        case 1: return new Color(129, 171, 236);  // Soft Blue
+                        case 2: return new Color(243, 156, 18);   // Orange
+                        default: return Color.GRAY;
+                    }
+                }
+            };
+
+            // Disable glass effects to keep the "Modern Flat" look
+            renderer.setBarPainter(new StandardBarPainter());
+            renderer.setShadowVisible(false);
+            plot.setRenderer(renderer);
+
+            ChartPanel chartPanel = new ChartPanel(barChart);
+            displayPanel.removeAll();
+            displayPanel.setLayout(new java.awt.BorderLayout());
+            displayPanel.add(chartPanel, java.awt.BorderLayout.CENTER);
+            displayPanel.revalidate();
+            displayPanel.repaint();
+
+        } catch (Exception e) {
+            System.out.println("Revenue Chart Error: " + e.getMessage());
+        }
+    }
+
+    public void showSignupTrend(javax.swing.JPanel displayPanel) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        try {
+            config.configclass con = new config.configclass();
+            String query = "SELECT start_date, COUNT(*) AS daily_total FROM members GROUP BY start_date LIMIT 7";
+            java.sql.ResultSet rs = con.getData(query);
+
+            while (rs.next()) {
+                dataset.addValue(rs.getDouble("daily_total"), "Signups", rs.getString("start_date"));
+            }
+
+            JFreeChart lineChart = ChartFactory.createLineChart(
+                    "New Member Signups", "", "",
+                    dataset, PlotOrientation.VERTICAL, false, true, false);
+
+            CategoryPlot plot = lineChart.getCategoryPlot();
+            plot.setBackgroundPaint(Color.WHITE);
+            plot.setRangeGridlinePaint(new Color(240, 240, 240));
+
+            org.jfree.chart.renderer.category.LineAndShapeRenderer renderer = new org.jfree.chart.renderer.category.LineAndShapeRenderer();
+            renderer.setSeriesPaint(0, new Color(39, 174, 96)); // Emerald
+            renderer.setSeriesStroke(0, new java.awt.BasicStroke(3.0f)); // Modern thick line
+            
+            plot.setRenderer(renderer);
+
+            ChartPanel chartPanel = new ChartPanel(lineChart);
+            displayPanel.removeAll();
+            displayPanel.setLayout(new java.awt.BorderLayout());
+            displayPanel.add(chartPanel, java.awt.BorderLayout.CENTER);
+            displayPanel.revalidate();
+            displayPanel.repaint();
+
+        } catch (Exception e) {
+            System.out.println("Signup Chart Error: " + e.getMessage());
+        }
+    }
+    
+public void getCardCount() {
+    config.configclass con = new config.configclass();
     try {
-        config.configclass con = new config.configclass();
-        // Query to get total revenue grouped by week or date
-        String query = "SELECT t_date, SUM(t_amount) AS total FROM transactions GROUP BY t_date LIMIT 7";
-        java.sql.ResultSet rs = con.getData(query);
-
-        int count = 1;
-        while (rs.next()) {
-            // Using count as the X-axis label (1, 2, 3...) to match your design
-            dataset.addValue(rs.getDouble("total"), "Revenue", String.valueOf(count++));
+        // 1. Total Revenue for the CURRENT MONTH
+        String revQuery = "SELECT SUM(t_amount) FROM transactions "
+                        + "WHERE strftime('%m', t_date) = strftime('%m', 'now') "
+                        + "AND strftime('%Y', t_date) = strftime('%Y', 'now')";
+        java.sql.ResultSet rsRev = con.getData(revQuery);
+        if (rsRev.next()) {
+            double totalRev = rsRev.getDouble(1);
+            revenue.setText("₱" + String.format("%.2f", totalRev));
         }
 
-        JFreeChart barChart = ChartFactory.createBarChart(
-                "Revenue trends over weeks", "", "",
-                dataset, PlotOrientation.VERTICAL, false, true, false);
+        // 2. New Member Signups for the CURRENT MONTH
+        String memQuery = "SELECT COUNT(*) FROM members "
+                        + "WHERE strftime('%m', start_date) = strftime('%m', 'now') "
+                        + "AND strftime('%Y', start_date) = strftime('%Y', 'now')";
+        java.sql.ResultSet rsMem = con.getData(memQuery);
+        if (rsMem.next()) {
+            newmember.setText(String.valueOf(rsMem.getInt(1)));
+        }
 
-        CategoryPlot plot = barChart.getCategoryPlot();
-        plot.setBackgroundPaint(Color.WHITE);
-        plot.setRangeGridlinePaint(new Color(240, 240, 240));
+        // 3. Total Transactions for the CURRENT MONTH
+        String transQuery = "SELECT COUNT(*) FROM transactions "
+                          + "WHERE strftime('%m', t_date) = strftime('%m', 'now') "
+                          + "AND strftime('%Y', t_date) = strftime('%Y', 'now')";
+        java.sql.ResultSet rsTrans = con.getData(transQuery);
+        if (rsTrans.next()) {
+            trans.setText(String.valueOf(rsTrans.getInt(1)));
+        }
 
-        // 🎨 CUSTOM RENDERER FOR COLOR CYCLING
-        BarRenderer renderer = new BarRenderer() {
-            @Override
-            public java.awt.Paint getItemPaint(int row, int col) {
-                switch (col % 3) {
-                    case 0: return new Color(39, 174, 96);  
-                    case 1: return new Color(129, 171, 236); 
-                    case 2: return new Color(243, 156, 18);  
-                    default: return Color.GRAY;
-                }
-            }
-        };
-
-        
-        renderer.setBarPainter(new org.jfree.chart.renderer.category.StandardBarPainter());
-        renderer.setShadowVisible(false);
-        plot.setRenderer(renderer);
-
-   
-        ChartPanel chartPanel = new ChartPanel(barChart);
-        displayPanel.removeAll();
-        displayPanel.setLayout(new java.awt.BorderLayout());
-        displayPanel.add(chartPanel, java.awt.BorderLayout.CENTER);
-        displayPanel.revalidate();
-        displayPanel.repaint();
-
-    } catch (Exception e) {
-        System.out.println("Revenue Chart Error: " + e.getMessage());
-    }
-}
-    public void showSignupTrend(javax.swing.JPanel displayPanel) {
-    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-    try {
-        config.configclass con = new config.configclass();
-  
-String query = "SELECT start_date, COUNT(*) AS daily_total FROM members GROUP BY start_date LIMIT 7";
-        java.sql.ResultSet rs = con.getData(query);
-
-        int count = 1;
-       while (rs.next()) {
-   
-    dataset.addValue(rs.getDouble("daily_total"), "Signups", rs.getString("start_date"));
-}
-
-        JFreeChart lineChart = ChartFactory.createLineChart(
-                "Sign up trend chart", "", "",
-                dataset, PlotOrientation.VERTICAL, true, true, false);
-
-        CategoryPlot plot = lineChart.getCategoryPlot();
-        plot.setBackgroundPaint(Color.WHITE);
-        plot.setRangeGridlinePaint(new Color(240, 240, 240));
-
-        // Styling the line to match your Emerald Green UI
-        org.jfree.chart.renderer.category.LineAndShapeRenderer renderer = new org.jfree.chart.renderer.category.LineAndShapeRenderer();
-        renderer.setSeriesPaint(0, new Color(39, 174, 96)); // Emerald
-        renderer.setSeriesStroke(0, new java.awt.BasicStroke(3.0f)); // Makes the line thicker/modern
-        
-        plot.setRenderer(renderer);
-
-        // Display in the designated JPanel
-        ChartPanel chartPanel = new ChartPanel(lineChart);
-        displayPanel.removeAll();
-        displayPanel.setLayout(new java.awt.BorderLayout());
-        displayPanel.add(chartPanel, java.awt.BorderLayout.CENTER);
-        displayPanel.revalidate();
-        displayPanel.repaint();
-
-    } catch (Exception e) {
-        System.out.println("Signup Chart Error: " + e.getMessage());
+    } catch (java.sql.SQLException e) {
+        System.out.println("Reports Card Error: " + e.getMessage());
     }
 }
     @SuppressWarnings("unchecked")
@@ -193,7 +224,7 @@ String query = "SELECT start_date, COUNT(*) AS daily_total FROM members GROUP BY
         jPanel6.setOpaque(false);
         ;
         jLabel1 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        revenue = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel3 = jPanel3 = new javax.swing.JPanel() {
             @Override
@@ -252,7 +283,7 @@ String query = "SELECT start_date, COUNT(*) AS daily_total FROM members GROUP BY
         jPanel7.setOpaque(false);
         ;
         jLabel2 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        newmember = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel4 = jPanel4 = new javax.swing.JPanel() {
             @Override
@@ -311,7 +342,7 @@ String query = "SELECT start_date, COUNT(*) AS daily_total FROM members GROUP BY
         jPanel8.setOpaque(false);
         ;
         jLabel3 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        trans = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         revenuePanel = new javax.swing.JPanel();
         signupPanel = new javax.swing.JPanel();
@@ -327,16 +358,16 @@ String query = "SELECT start_date, COUNT(*) AS daily_total FROM members GROUP BY
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/members (2).png"))); // NOI18N
-        jPanel6.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 50, 40));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/revenue.png"))); // NOI18N
+        jPanel6.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 50));
 
         jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, 60));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("0");
-        jLabel5.setToolTipText("");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
+        revenue.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        revenue.setForeground(new java.awt.Color(255, 255, 255));
+        revenue.setText("0");
+        revenue.setToolTipText("");
+        jPanel2.add(revenue, new org.netbeans.lib.awtextra.AbsoluteConstraints(84, 30, 100, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -357,11 +388,11 @@ String query = "SELECT start_date, COUNT(*) AS daily_total FROM members GROUP BY
 
         jPanel3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, 60));
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("0");
-        jLabel7.setToolTipText("");
-        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
+        newmember.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        newmember.setForeground(new java.awt.Color(255, 255, 255));
+        newmember.setText("0");
+        newmember.setToolTipText("");
+        jPanel3.add(newmember, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -374,23 +405,24 @@ String query = "SELECT start_date, COUNT(*) AS daily_total FROM members GROUP BY
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel8.setBackground(new java.awt.Color(93, 173, 226));
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/payments.png"))); // NOI18N
-        jPanel8.add(jLabel3);
+        jPanel8.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, -1, 50));
 
-        jPanel4.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 50, 60));
+        jPanel4.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, 60));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("0");
-        jLabel9.setToolTipText("");
-        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
+        trans.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        trans.setForeground(new java.awt.Color(255, 255, 255));
+        trans.setText("0");
+        trans.setToolTipText("");
+        jPanel4.add(trans, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Transactions");
-        jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 70, 120, -1));
+        jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 70, 100, -1));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 190, 100));
 
@@ -431,11 +463,8 @@ String query = "SELECT start_date, COUNT(*) AS daily_total FROM members GROUP BY
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -443,7 +472,10 @@ String query = "SELECT start_date, COUNT(*) AS daily_total FROM members GROUP BY
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JLabel newmember;
+    private javax.swing.JLabel revenue;
     private javax.swing.JPanel revenuePanel;
     private javax.swing.JPanel signupPanel;
+    private javax.swing.JLabel trans;
     // End of variables declaration//GEN-END:variables
 }
