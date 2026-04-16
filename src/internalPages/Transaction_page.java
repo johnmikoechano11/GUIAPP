@@ -106,24 +106,23 @@ jScrollPane1.getViewport().setBackground(Color.WHITE);
 public void displayData() {
     config.configclass cc = new config.configclass();
 
-    // Added t.r_id and t.t_method to match your Edit logic
     String query = "SELECT "
                  + "t.t_id AS 'Transaction ID', "
                  + "m.m_fname AS 'Member Name', " 
-                 + "t.r_id AS 'Payment ID', "
+                 + "t.r_id AS 'Payment ID', "    
                  + "t.t_amount AS 'Amount', "
                  + "t.t_method AS 'Method', "
                  + "t.t_date AS 'Date', "
                  + "t.t_status AS 'Status' "
-                 + "FROM transactions t "
-                 + "LEFT JOIN members m ON t.m_id = m.m_id"; 
+                 + " FROM transactions t "
+                 + " LEFT JOIN members m ON t.m_id = m.m_id "
+                 + " LEFT JOIN payments p ON t.r_id = p.r_id"; 
 
     cc.displayData(query, transaction_table);
 }
-
 public void printReceipt(String id, String member, String amount, String date, String status) {
     java.awt.print.PrinterJob job = java.awt.print.PrinterJob.getPrinterJob();
-    job.setJobName("Print Receipt");
+    job.setJobName("Gym Receipt " + id);
 
     job.setPrintable(new java.awt.print.Printable() {
         @Override
@@ -133,20 +132,33 @@ public void printReceipt(String id, String member, String amount, String date, S
             java.awt.Graphics2D g2 = (java.awt.Graphics2D) graphics;
             g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 
-            int y = 20;
-            g2.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18));
-            g2.drawString("GYM MANAGEMENT SYSTEM", 50, y); y += 30;
-            g2.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 10)); // Monospaced for alignment
-            g2.drawString("------------------------------------------", 50, y); y += 20;
-            g2.drawString(String.format("%-15s: %s", "Ref ID", id), 50, y); y += 20;
-            g2.drawString(String.format("%-15s: %s", "Member", member), 50, y); y += 20;
-            g2.drawString(String.format("%-15s: %s", "Date", date), 50, y); y += 20;
-            g2.drawString("------------------------------------------", 50, y); y += 25;
-            g2.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
-            g2.drawString("TOTAL AMOUNT:  PHP " + amount, 50, y); y += 35;
+            int x = 70; // Adjusted margin
+            int y = 50; // Starting Y position
 
-            g2.setFont(new java.awt.Font("Segoe UI", java.awt.Font.ITALIC, 10));
-            g2.drawString("Thank you for your payment!", 50, y);
+            // Header
+            g2.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 16));
+            g2.drawString("MUSCLE FITNESS", x, y); y += 25;
+            
+            g2.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 9));
+            g2.drawString("------------------------------------------", x, y); y += 20;
+
+            // Transaction Details
+            g2.drawString(String.format("%-15s: %s", "Transaction ID", id), x, y); y += 15;
+            g2.drawString(String.format("%-15s: %s", "Member Name", member), x, y); y += 15;
+            g2.drawString(String.format("%-15s: %s", "Amount Paid", member), x, y); y += 15;
+            g2.drawString(String.format("%-15s: %s", "Payment Date", date), x, y); y += 15;
+            g2.drawString(String.format("%-15s: %s", "Status", status), x, y); y += 15;
+            
+            g2.drawString("------------------------------------------", x, y); y += 25;
+
+            // Total Section
+            g2.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+            g2.drawString("TOTAL PAID: PHP " + amount, x, y); y += 30;
+
+            // Footer
+            g2.setFont(new java.awt.Font("Segoe UI", java.awt.Font.ITALIC, 9));
+            g2.drawString("This serves as your official receipt.", x, y); y += 12;
+            g2.drawString("Thank you for choosing our gym!", x, y);
 
             return java.awt.print.Printable.PAGE_EXISTS;
         }
@@ -701,19 +713,19 @@ config.configclass conf = new config.configclass();
 
     private void printBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printBtnMouseClicked
      int rowIndex = transaction_table.getSelectedRow();
-    
+
     if (rowIndex < 0) {
-        javax.swing.JOptionPane.showMessageDialog(null, "Please select a transaction to print!");
+        javax.swing.JOptionPane.showMessageDialog(null, "Please select a transaction!");
     } else {
         javax.swing.table.TableModel model = transaction_table.getModel();
-        
-        // Match these indexes to your displayData() columns
-        String id = model.getValueAt(rowIndex, 0).toString();
-        String member = model.getValueAt(rowIndex, 1).toString();
-        String amount = model.getValueAt(rowIndex, 2).toString();
-        String date = model.getValueAt(rowIndex, 3).toString();
-        String status = model.getValueAt(rowIndex, 4).toString();
-        
+
+        // Indexes must match your SELECT query above
+        String id = model.getValueAt(rowIndex, 0).toString();     // Transaction ID
+        String member = model.getValueAt(rowIndex, 1).toString(); // Member Name
+        String amount = model.getValueAt(rowIndex, 3).toString(); // Amount
+        String date = model.getValueAt(rowIndex, 5).toString();   // Date
+        String status = model.getValueAt(rowIndex, 6).toString(); // Status
+
         printReceipt(id, member, amount, date, status);
     }
     }//GEN-LAST:event_printBtnMouseClicked

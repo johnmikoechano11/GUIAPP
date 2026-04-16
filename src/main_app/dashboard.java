@@ -75,6 +75,7 @@ maindesktop.setUI(new javax.swing.plaf.basic.BasicDesktopPaneUI());
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -383,7 +384,7 @@ maindesktop.setUI(new javax.swing.plaf.basic.BasicDesktopPaneUI());
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(885, 552));
+        setSize(new java.awt.Dimension(869, 513));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

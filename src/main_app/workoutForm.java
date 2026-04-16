@@ -123,6 +123,7 @@ public class workoutForm extends javax.swing.JFrame {
         close = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel3.setBackground(new java.awt.Color(244, 247, 246));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
